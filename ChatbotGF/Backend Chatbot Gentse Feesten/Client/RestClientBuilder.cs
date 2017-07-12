@@ -9,7 +9,7 @@ namespace Chatbot_GF.Client
         
         public static IMessengerApi GetMessengerApi()
         {
-            return RestClient.For<IMessengerApi>(production);
+            return RestClient.For<IMessengerApi>(testing);
         }
     }
 }

@@ -8,28 +8,23 @@ using static Chatbot_GF.BotData.MessengerData;
 
 namespace Chatbot_GF.MessengerManager
 {
-    public class PayloadHandler
+    public class PayloadHandler : IPayloadHandler
     {
         private ReplyManager rmanager;
         private TempUserData UserLanguage;
+        private DataConstants Constants;
+        private RemoteDataManager remote;
 
         private static PayloadHandler instance;
+        private ILocationFactory locationFactory;
 
-        public PayloadHandler()
+        public PayloadHandler(IReplyManager manager, ITempUserData userData, IDataConstants dataConstants, IRemoteDataManager remoteDataManager, ILocationFactory locationFactory)
         {
-            rmanager = new ReplyManager();
-            UserLanguage = TempUserData.Instance;
-
-        }
-
-        public static PayloadHandler Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new PayloadHandler();
-                return instance;
-            }
+            rmanager = (ReplyManager)manager;
+            UserLanguage = (TempUserData) userData;
+            Constants = (DataConstants) dataConstants;
+            remote = (RemoteDataManager) remoteDataManager;
+            this.locationFactory = locationFactory;
         }
 
         public void handle(Messaging message)
@@ -59,9 +54,9 @@ namespace Chatbot_GF.MessengerManager
                         break;
                     case "GET_TOILET":
                         string[] co = payload.Value.Split(':');
-                        SearchableLocation location = DataConstants.GetClosestsToilet(double.Parse(co[0]), double.Parse(co[1]));
+                        SearchableLocation location = Constants.GetClosestsToilet(double.Parse(co[0]), double.Parse(co[1]));
                         // Console.WriteLine($"Closest location found: {location.PrettyName} ");
-                        rmanager.SendGenericMessage(LocationFactory.MakeLocationResponse(id, location.Lat, location.Lon, payload.Language));
+                        rmanager.SendGenericMessage(locationFactory.MakeLocationResponse(id, location.Lat, location.Lon, payload.Language));
                         break;
                     case "SET_LANGUAGE":
                         rmanager.SendWelcomeMessage(id, payload.Value);
@@ -69,11 +64,11 @@ namespace Chatbot_GF.MessengerManager
                     case "GET_USER_LOCATION":
                         if(!string.IsNullOrWhiteSpace(payload.Value) && payload.Value == "true")
                         {
-                            TempUserData.Instance.Add(id, payload.Language, true);
+                            UserLanguage.Add(id, payload.Language, true);
                         }
                         else
                         {
-                            TempUserData.Instance.Add(id, payload.Language, false);
+                            UserLanguage.Add(id, payload.Language, false);
                         }
                         rmanager.SendGetLocationButton(message.sender.id,payload.Language);
                         break;
@@ -85,16 +80,16 @@ namespace Chatbot_GF.MessengerManager
                         break;
                     case "DEVELOPER_DEFINED_LOCATION":
                         if(payload.Value != "ALL")
-                            RemoteDataManager.GetInstance().GetEventsHereNow(id, DataConstants.GetLocation(payload.Value).Id, DataConstants.Now,payload.Language);
+                            remote.GetEventsHereNow(id, Constants.GetLocation(payload.Value).Id, Constants.Now,payload.Language);
                         else
-                            RemoteDataManager.GetInstance().GetEventsNow(id,payload.Language, DataConstants.Now);
+                            remote.GetEventsNow(id,payload.Language, Constants.Now);
                         break;
                     case "DEVELOPER_DEFINED_DAY":
                         rmanager.SendTimePeriod(id, payload.Value, payload.Language);
                         break;
                     case "DEVELOPER_DEFINED_COORDINATES":
                         string[] data = payload.Value.Split(':');
-                        List<SearchableLocation> locatio = DataConstants.GetClosestLocation(new Coordinates { lat = double.Parse(data[1]), lon = double.Parse(data[0]) },3);
+                        List<SearchableLocation> locatio = Constants.GetClosestLocation(new Coordinates { lat = double.Parse(data[1]), lon = double.Parse(data[0]) },3);
                        // Console.WriteLine($"Closest location found: {location.PrettyName} ");
                         rmanager.SendLocationResult(id, locatio, payload.Language);
                         break;
@@ -110,13 +105,13 @@ namespace Chatbot_GF.MessengerManager
                         payload.Value = $"{da[1]}{da[0]}:00+02:00";
                         //rmanager.SendTextMessage(id, value);
                         //Console.WriteLine("Datum: " + payload.Value);
-                        RemoteDataManager.GetInstance().GetEventsAtTime(id, payload.Value,payload.Language);
+                        remote.GetEventsAtTime(id, payload.Value,payload.Language);
                         break;
 
                     case "DEVELOPER_DEFINED_NEXT":
                         // moet nog normaal gezet worden maar voor test gevallen is het deze tijd
                         int pos = payload.Value.IndexOf("-_-");
-                        RemoteDataManager.GetInstance().GetNextEvents(payload.Value.Substring(0, pos), payload.Value.Substring(pos + 3), 3, id, payload.Language);
+                        remote.GetNextEvents(payload.Value.Substring(0, pos), payload.Value.Substring(pos + 3), 3, id, payload.Language);
                         break;
                     case "GET_HELP":
                         rmanager.SendHelpMessage(id);

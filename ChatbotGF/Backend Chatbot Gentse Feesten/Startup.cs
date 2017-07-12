@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Chatbot_GF.MessengerManager;
+using Chatbot_GF.Data;
+using Chatbot_GF.MessageBuilder.Factories;
 
 namespace Chatbot_GF
 {
@@ -27,15 +30,28 @@ namespace Chatbot_GF
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             // Add framework services.
             services.AddMvc();
+
+            //Add custom services
+            services.AddScoped<IPayloadHandler, PayloadHandler>();
+            services.AddScoped<IMessageHandler, MessageHandler>();
+            services.AddTransient<IReplyManager, ReplyManager>();
+            services.AddSingleton<ITempUserData, TempUserData>();
+            services.AddSingleton<IDataConstants, DataConstants>();
+            services.AddSingleton<ITextHandler, FreeTextHandler>();
+            services.AddScoped<IRemoteDataManager, RemoteDataManager>();
+            services.AddTransient<ICarouselFactory, CarouselFactory>();
+            services.AddTransient<ILocationFactory, LocationFactory>();
+
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddFile("Logs/Chatbot-{Date}.txt");
 
             app.UseStaticFiles();
             app.UseMvc();

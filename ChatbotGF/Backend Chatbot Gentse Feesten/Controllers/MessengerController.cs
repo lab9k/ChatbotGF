@@ -13,14 +13,16 @@ namespace Chatbot_GF.Controllers
     [Route("api/[controller]")]
     public class MessengerController : Controller
     {
-        private MessageHandler mhandler;
-        private PayloadHandler phandler;
-        private readonly ILogger _logger;
+        private IMessageHandler mhandler;
+        private IPayloadHandler phandler;
+        private TempUserData uData;
+        private readonly ILogger<MessengerController> _logger;
 
-        public MessengerController(ILogger<MessengerController> logger)
+        public MessengerController(ILogger<MessengerController> logger, IPayloadHandler phandler, IMessageHandler mhandler, ITempUserData uData)
         {
-            mhandler = new MessageHandler();
-            phandler = PayloadHandler.Instance;
+            this.mhandler = mhandler;
+            this.phandler = phandler;
+            this.uData = (TempUserData)uData;
             _logger = logger;
         }
 
@@ -68,10 +70,10 @@ namespace Chatbot_GF.Controllers
                                 Attachment locationAtt = currentMessage?.message?.attachments[0];
                                 Coordinates coords = locationAtt.payload?.coordinates;
                                 //Console.WriteLine($"Coordinates Received: {coords.lon} {coords.lat}");
-                                string lang = TempUserData.Instance.GetLanguage(currentMessage.sender.id);
+                                string lang = uData.GetLanguage(currentMessage.sender.id);
                                 if (string.IsNullOrWhiteSpace(lang))
                                     lang = "";
-                                if (!TempUserData.Instance.WantsToilet(message.sender.id))
+                                if (!uData.WantsToilet(message.sender.id))
                                 {
                                     currentMessage.postback = new Postback { payload = $"DEVELOPER_DEFINED_COORDINATES°{coords.lon}:{coords.lat}°{lang}" };
                                     //Console.WriteLine("False " + currentMessage.postback);
@@ -83,7 +85,7 @@ namespace Chatbot_GF.Controllers
                                     //Console.WriteLine("True " +  currentMessage.postback);
                                     phandler.handle(message);
                                 }
-                                TempUserData.Instance.Remove(message.sender.id); //Remove the user from the set
+                                uData.Remove(message.sender.id); //Remove the user from the set
                             }
                             catch(Exception ex)
                             {

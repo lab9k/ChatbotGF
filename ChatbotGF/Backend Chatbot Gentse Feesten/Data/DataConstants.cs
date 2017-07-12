@@ -10,14 +10,14 @@ using static Chatbot_GF.BotData.MessengerData;
 
 namespace Chatbot_GF.Data
 {
-    public class DataConstants
+    public class DataConstants : IDataConstants
     {
-        public static int numberLocations = 17;
-        private static IConfigurationRoot LocationsStore;
-        private static IConfigurationRoot MessagesStore;
-        private static IConfigurationRoot QueryStore;
+        public int numberLocations;
+        private IConfigurationRoot LocationsStore;
+        private IConfigurationRoot MessagesStore;
+        private IConfigurationRoot QueryStore;
 
-        public static List<SearchableLocation> Locations
+        public List<SearchableLocation> Locations
         {
             get {
                 if (locations == null)
@@ -26,11 +26,11 @@ namespace Chatbot_GF.Data
             }
         }
         
-        private static List<SearchableLocation> locations;
-        private static List<SearchableLocation> toilets;
-        private static readonly int TOILET_COUNT = 171;
+        private List<SearchableLocation> locations;
+        private List<SearchableLocation> toilets;
+        private readonly int TOILET_COUNT = 171;
 
-        public static List<SearchableLocation> Toilets {
+        public List<SearchableLocation> Toilets {
             get {
                 if (toilets == null)
                     initToilets();
@@ -38,7 +38,7 @@ namespace Chatbot_GF.Data
             }
         }
 
-        private static void initQueries()
+        private void initQueries()
         {
             var builder = new ConfigurationBuilder()
                               .SetBasePath(Directory.GetCurrentDirectory())
@@ -46,7 +46,7 @@ namespace Chatbot_GF.Data
             QueryStore = builder.Build();
         }
 
-        private static void initToilets()
+        private void initToilets()
         {
             try
             {
@@ -69,12 +69,12 @@ namespace Chatbot_GF.Data
             }
         }
 
-        public static SearchableLocation GetClosestsToilet(double Lon, double Lat)
+        public SearchableLocation GetClosestsToilet(double Lon, double Lat)
         {
             return GetClosestLocation(Toilets, new Coordinates { lon = Lon, lat = Lat });
         }
 
-        public static SearchableLocation GetLocationBySearchTag(string tag)
+        public SearchableLocation GetLocationBySearchTag(string tag)
         {
             foreach(SearchableLocation loc in Locations)
             {
@@ -89,7 +89,7 @@ namespace Chatbot_GF.Data
             return null;
         }
 
-        public static String GetQuery(string name)
+        public string GetQuery(string name)
         {
             if(QueryStore == null)
             {
@@ -98,12 +98,12 @@ namespace Chatbot_GF.Data
             return QueryStore[name];
         }
 
-        public static DateTime Now
+        public DateTime Now
         {
             get { return DateTime.Now.AddDays(5).AddHours(6); }
         }
 
-        private static void initMessages()
+        private void initMessages()
         {
             try
             {
@@ -118,7 +118,7 @@ namespace Chatbot_GF.Data
             }
         }
 
-        private static void initLocations()
+        private void initLocations()
         {
             try
             {
@@ -157,7 +157,7 @@ namespace Chatbot_GF.Data
             }
         }
 
-        public static string GetMessage(string name, string locale)
+        public string GetMessage(string name, string locale)
         {
             if(MessagesStore == null)
             {
@@ -166,7 +166,7 @@ namespace Chatbot_GF.Data
             return MessagesStore[$"messages:{name}:{locale}"];
         }
 
-        public static SearchableLocation GetLocation(string name){
+        public SearchableLocation GetLocation(string name){
             if (locations == null)
                 initLocations();
             foreach(SearchableLocation loc in locations)
@@ -179,7 +179,7 @@ namespace Chatbot_GF.Data
             return null;
         }
 
-        public static List<SearchableLocation> GetClosestLocation(Coordinates coors, int count)
+        public List<SearchableLocation> GetClosestLocation(Coordinates coors, int count)
         {
             List<SearchableLocation> closests = new List<SearchableLocation>();
             List<SearchableLocation> locations = new List<SearchableLocation>(Locations); //shallow clone
@@ -192,7 +192,7 @@ namespace Chatbot_GF.Data
             return closests;
         }
 
-        public static SearchableLocation GetClosestLocation(List<SearchableLocation> locations,Coordinates coors)
+        public SearchableLocation GetClosestLocation(List<SearchableLocation> locations,Coordinates coors)
         {
             SearchableLocation closests = locations[0];
             double dx = Locations[0].Lon - coors.lon;

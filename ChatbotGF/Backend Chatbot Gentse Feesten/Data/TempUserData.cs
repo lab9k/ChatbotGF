@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Chatbot_GF.Data
 {
-    public class TempUserData
+    public class TempUserData : ITempUserData
     {
         private Dictionary<long, UserData> UserLanguage;
 
@@ -35,27 +35,16 @@ namespace Chatbot_GF.Data
         public void CleanMaps(int minutes)
         {
             DateTime threshhold = DateTime.Now.AddMinutes(minutes * 2);
-            foreach(DateTime time in LastConnected.Keys)
+            foreach (DateTime time in LastConnected.Keys)
             {
 
-                if(DateTime.Compare(time,threshhold) < 0) //date is before threshhold
+                if (DateTime.Compare(time, threshhold) < 0) //date is before threshhold
                 {
                     Remove(LastConnected[time]);
                 }
             }
 
         }
-
-
-        public static TempUserData Instance {
-        get {
-                if (instance == null)
-                    instance = new TempUserData();
-                return instance;
-
-            }
-        }
-
         public string GetLanguage(long id)
         {
             if (UserLanguage.ContainsKey(id))

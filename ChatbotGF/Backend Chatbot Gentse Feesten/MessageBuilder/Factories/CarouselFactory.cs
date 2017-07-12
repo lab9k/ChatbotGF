@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 
 namespace Chatbot_GF.MessageBuilder.Factories
 {
-    public class CarouselFactory
+    public class CarouselFactory : ICarouselFactory
     {
+        private DataConstants Constants;
 
-        public static GenericMessage makeCarousel(long id, List<Event> events, string lang)
+        public CarouselFactory(IDataConstants Constants )
+        {
+            this.Constants = (DataConstants) Constants;
+        }
+
+        public GenericMessage makeCarousel(long id, List<Event> events, string lang)
         {
             if (events.Count > 10)
             {
@@ -27,14 +33,14 @@ namespace Chatbot_GF.MessageBuilder.Factories
                 {
                     if (eve.description.nl.Length < 640)
                     {
-                        buttons.Add(new ButtonPayload(DataConstants.GetMessage("What_Is_It", lang), "postback", "DEVELOPER_DEFINED_DESCRIPTION°" + eve.description.nl + "°" + lang));
+                        buttons.Add(new ButtonPayload(Constants.GetMessage("What_Is_It", lang), "postback", "DEVELOPER_DEFINED_DESCRIPTION°" + eve.description.nl + "°" + lang));
                     } else
                     {
-                        buttons.Add(new ButtonPayload(DataConstants.GetMessage("What_Is_It", lang), "postback", "DEVELOPER_DEFINED_DESCRIPTION°" + eve.description.nl.Substring(0, 635) + "..." + "°" + lang));
+                        buttons.Add(new ButtonPayload(Constants.GetMessage("What_Is_It", lang), "postback", "DEVELOPER_DEFINED_DESCRIPTION°" + eve.description.nl.Substring(0, 635) + "..." + "°" + lang));
                     }
                 }
 
-                buttons.Add(new ButtonPayload(DataConstants.GetMessage("NEXT", lang), "postback", "DEVELOPER_DEFINED_NEXT°" + eve.location + "-_-" + eve.startDate + "°" + lang));
+                buttons.Add(new ButtonPayload(Constants.GetMessage("NEXT", lang), "postback", "DEVELOPER_DEFINED_NEXT°" + eve.location + "-_-" + eve.startDate + "°" + lang));
 
                 var image = eve.image;
                 if (string.IsNullOrEmpty(image))
@@ -43,7 +49,7 @@ namespace Chatbot_GF.MessageBuilder.Factories
                 }
 
                 string dates = " ";
-                string juli = $" {DataConstants.GetMessage("MONTH", lang)} ";
+                string juli = $" {Constants.GetMessage("MONTH", lang)} ";
                 if (eve.startDate.ToString().Equals(eve.endDate.ToString()))
                 {
                     string[] helpStart = eve.startDate.ToString().Split('T');
@@ -84,13 +90,13 @@ namespace Chatbot_GF.MessageBuilder.Factories
                     dates += hourEnd[1];
                 }
                 buttons.Add(new ButtonShare());
-                string free = (eve.isAccessibleForFree == true) ? DataConstants.GetMessage("FREE", lang) : DataConstants.GetMessage("NOTFREE", lang);
+                string free = (eve.isAccessibleForFree == true) ? Constants.GetMessage("FREE", lang) : Constants.GetMessage("NOTFREE", lang);
                 string wheelie = "";
                 if (!(eve.isWheelchairUnfriendly ?? true))
                 {
                     wheelie = " | ♿";
                 }
-                string loc = (DataConstants.GetLocation(eve.location)?.PrettyName ?? (eve.locationName ?? "???"));
+                string loc = (Constants.GetLocation(eve.location)?.PrettyName ?? (eve.locationName ?? "???"));
                 if (loc.Length > 21)
                 {
                     loc = loc.Substring(0, 20) + "...";

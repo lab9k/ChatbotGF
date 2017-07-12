@@ -3,36 +3,25 @@ using static Chatbot_GF.BotData.MessengerData;
 
 namespace Chatbot_GF.MessengerManager
 {
-    public class MessageHandler
+    public class MessageHandler : IMessageHandler
     {
 
         private ReplyManager replyManager;
-
+        private ITextHandler textHandler;
         public string Language_choice { get; set; }
 
-        public MessageHandler()
+        public MessageHandler(IReplyManager manager, ITextHandler textHandler)
         {
-            replyManager = new ReplyManager();
-            Language_choice = "GENTS";
+            replyManager = (ReplyManager) manager;
+            this.textHandler = textHandler;
         }
-
-        /*public void ReplyRecieved(Messaging message)
-        {
-            if (!string.IsNullOrWhiteSpace(message?.message?.text))
-            {
-                // replyManager.SendImage(message.sender.id, "https://media.giphy.com/media/xUA7beWTUYAcGOkWIM/giphy.gif");
-                replyManager.SendTextMessage(message.sender.id, DataConstants.GetMessage("Donot_understand", Language_choice));
-                replyManager.SendLocationQuery(message.sender.id, 0);
-            }                
-            
-        }*/
 
         public void CheckForKnowText(Messaging message)
         {
             if (!string.IsNullOrWhiteSpace(message?.message?.text))
             {
                 string txt = message.message.text;
-                FreeTextHandler.CheckText(message.sender.id, txt);
+                textHandler.CheckText(message.sender.id, txt);
             }
         }
         /// <summary>
@@ -46,8 +35,8 @@ namespace Chatbot_GF.MessengerManager
             {
                 if (string.IsNullOrWhiteSpace(message?.postback?.payload) && !string.IsNullOrWhiteSpace(message?.message?.text))
                 {
-                    Console.WriteLine("Zoeken naar payload");
-                    string response = FreeTextHandler.GetPayload(message.message.text);
+                   // Console.WriteLine("Zoeken naar payload");
+                    string response = textHandler.GetPayload(message.message.text);
                     if (response != null)
                     {
                         SetPayload(message, response);

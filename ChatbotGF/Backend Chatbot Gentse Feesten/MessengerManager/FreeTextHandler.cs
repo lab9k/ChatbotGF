@@ -8,37 +8,38 @@ using System.Threading.Tasks;
 
 namespace Chatbot_GF.MessengerManager
 {
-    public class FreeTextHandler
+    public class FreeTextHandler : ITextHandler
     {
-        private static IConfiguration ReplyStore;
-        private static ReplyManager RMmanager;
+        private IConfiguration ReplyStore;
+        private ReplyManager RMmanager;
+        private DataConstants Constants;
+        private RemoteDataManager Remote;
 
-        private static void InitReplies()
+
+        public FreeTextHandler(IReplyManager rmanager, IDataConstants Constants, IRemoteDataManager Remote)
+        {
+            RMmanager = (ReplyManager)rmanager;
+            this.Constants =(DataConstants) Constants;
+            this.Remote = (RemoteDataManager)Remote;
+        }
+        private void InitReplies()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                .AddJsonFile("replies.json");
             ReplyStore = builder.Build();
-
-            RMmanager = new ReplyManager();
         }
 
 
-        public static void CheckText(long id,string text)
+        public void CheckText(long id,string text)
         {
             string res;
-            if (!string.IsNullOrEmpty(DataConstants.GetLocationBySearchTag(text)?.Id))
+            if (!string.IsNullOrEmpty(Constants.GetLocationBySearchTag(text)?.Id))
             {
-                RemoteDataManager.GetInstance().GetEventsHereNow(id, DataConstants.GetLocationBySearchTag(text).Id, DataConstants.Now, "NL");
+                Remote.GetEventsHereNow(id, Constants.GetLocationBySearchTag(text).Id, Constants.Now, "NL");
             }
             else
             {
-
-                if (ReplyStore == null)
-                {
-                    InitReplies();
-                }
-
                 res = GetResponse(text);
                 if (res != null && res.Length > 3)
                 {
@@ -49,11 +50,11 @@ namespace Chatbot_GF.MessengerManager
                 /*RMmanager.SendTextMessage(id, DataConstants.GetMessage("Donot_understand", "NL"));
                 RMmanager.SendLocationQuery(id, 0, "NL");*/
                 //Console.WriteLine("Zoeken naar event: " + text);
-                RemoteDataManager.GetInstance().GetEventByName(text, id, "NL");
+                Remote.GetEventByName(text, id, "NL");
             }
         }
         
-        private static string RemoveNonAlphanumerics(string text)
+        private string RemoveNonAlphanumerics(string text)
         {
             char[] arr = text.Where(c => (char.IsLetterOrDigit(c) ||
                              char.IsWhiteSpace(c) ||
@@ -62,7 +63,7 @@ namespace Chatbot_GF.MessengerManager
             return new string(arr);
         }
 
-        public static string GetResponse(string text)
+        public string GetResponse(string text)
         {
             
             try
@@ -78,7 +79,7 @@ namespace Chatbot_GF.MessengerManager
                     string query = string.Join(":", KeywordsFound);
                     //Console.WriteLine("Searching " + query + ":" + words[count]);
                     //Console.WriteLine(ReplyStore["keywords:feestje:waar:response:nl"]);
-                    if (ReplyStore.GetSection(query + ":" + words[count]).GetValue<string>("response") != null)
+                    if (!string.IsNullOrWhiteSpace(ReplyStore.GetSection(query + ":" + words[count])?.GetValue<string>("response")))
                     {
                        // Console.WriteLine(query + ":" + words[count] + "Keyword found!");
                         KeywordsFound.Add(words[count]);
@@ -104,13 +105,8 @@ namespace Chatbot_GF.MessengerManager
             }
         }
 
-        public static string GetPayload(string text)
+        public string GetPayload(string text)
         {
-            if (ReplyStore == null)
-            {
-                InitReplies();
-            }
-
             try
             {
                 text = RemoveNonAlphanumerics(text);
@@ -124,7 +120,8 @@ namespace Chatbot_GF.MessengerManager
                     string query = string.Join(":", KeywordsFound);
                    // Console.WriteLine("Searching " + query + ":" + words[count]);
                     //Console.WriteLine(ReplyStore["keywords:feestje:waar:response:nl"]);
-                    if (ReplyStore.GetSection(query + ":" + words[count]).GetValue<string>("payload") != null)
+
+                    if (!string.IsNullOrWhiteSpace(ReplyStore.GetSection(query + ":" + words[count])?.GetValue<string>("payload")))
                     {
                         //Console.WriteLine(query + ":" + words[count] + "Keyword found!");
                         KeywordsFound.Add(words[count]);
@@ -146,7 +143,6 @@ namespace Chatbot_GF.MessengerManager
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
                 return null;
             }
         }
