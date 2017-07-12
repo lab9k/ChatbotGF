@@ -113,12 +113,6 @@ namespace Chatbot_GF.MessengerManager
                         int pos = payload.Value.IndexOf("-_-");
                         remote.GetNextEvents(payload.Value.Substring(0, pos), payload.Value.Substring(pos + 3), 3, id, payload.Language);
                         break;
-                    case "GET_HELP":
-                        rmanager.SendHelpMessage(id);
-                        break;
-                    case "GET_HELP_PAGE":
-                        rmanager.SendTextMessage(id, "Comming Soon (2017)");
-                        break;
                     default:
                         //do nothing
                         break;

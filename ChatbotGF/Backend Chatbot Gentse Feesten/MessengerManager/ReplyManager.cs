@@ -203,14 +203,4 @@ namespace Chatbot_GF.MessengerManager
             api.SendMessageToUser(message);
         }
 
-        public void SendHelpMessage(long id)
-        {
-            List<IButton> buttons = new List<IButton>();
-            buttons.Add(new ButtonPayload("iets", "postback", "GET_HELP_PAGE"));
-            buttons.Add(new ButtonPayload("Hulpdiensten", "phone_number", "+112"));
-            GenericMessage message = new GenericMessage(id, new Attachment("template", new ButtonTemplate("button", buttons, Constants.GetMessage("HELPMESSAGE", "NL"))));
-            //Console.WriteLine("Help options: " + api.SendMessageToUser(message).Result);
-            api.SendMessageToUser(message);
-        }
-    }
 }
