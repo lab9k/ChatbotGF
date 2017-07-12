@@ -30,7 +30,7 @@ namespace Chatbot_GF.MessageBuilder.Factories
             {
                 List<IButton> buttons = new List<IButton>();
                 DefaultAction defaultAction = new DefaultAction("web_url", MakeUrl(eve.name.nl), true);
-                if (!string.IsNullOrWhiteSpace(eve.description.nl))
+                if (!string.IsNullOrWhiteSpace(eve.description?.nl))
                 {
                     if (eve.description.nl.Length < 640)
                     {
@@ -91,7 +91,7 @@ namespace Chatbot_GF.MessageBuilder.Factories
                     dates += hourEnd[1];
                 }
                 buttons.Add(new ButtonShare());
-                string free = (eve.isAccessibleForFree == true) ? Constants.GetMessage("FREE", lang) : Constants.GetMessage("NOTFREE", lang);
+                string free = ((eve.isAccessibleForFree ?? false) == true) ? Constants.GetMessage("FREE", lang) : Constants.GetMessage("NOTFREE", lang);
                 string wheelie = "";
                 if (!(eve.isWheelchairUnfriendly ?? true))
                 {

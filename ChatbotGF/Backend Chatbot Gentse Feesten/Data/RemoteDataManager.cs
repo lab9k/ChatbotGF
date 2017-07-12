@@ -59,7 +59,7 @@ namespace Chatbot_GF.Data
 
         public void GetEventsNow(long id, string lang, DateTime time)
         {
-            string formattedTime = time.ToString("yyyy-MM-ddTHH:mm:sszzz");
+           string formattedTime = time.ToString("yyyy-MM-ddTHH:mm:sszzz");
             string startdatefilter = "?startdate < \"" + formattedTime + "\" ^^ xsd:dateTime";
             string enddatefilter = "?enddate > \"" + formattedTime + "\" ^^ xsd:dateTime";
             //filter over defined locations only
@@ -105,11 +105,13 @@ namespace Chatbot_GF.Data
                     {
                         try
                         {
+                            System.Console.WriteLine("Voor");
                             Event e = ResultParser.GetEvent(res);
+                            System.Console.WriteLine("Na");
                             events.Add(e);
                         } catch (Exception ex)
                         {
-                            System.Console.WriteLine(ex);
+                            //System.Console.WriteLine(ex);
                         }
                     }
                     rm.SendTextMessage(user.Id, constants.GetMessage("Found", user.Language));
