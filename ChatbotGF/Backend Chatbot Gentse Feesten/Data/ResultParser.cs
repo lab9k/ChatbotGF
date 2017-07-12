@@ -56,6 +56,8 @@ namespace Chatbot_GF.Data
                         case "location_name":
                             e.locationName = normalizeString(res[key].ToString());
                             break;
+                        default:
+                            break;
                     }
                 }catch(Exception ex)
                 {

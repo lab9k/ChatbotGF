@@ -131,7 +131,7 @@ namespace Chatbot_GF.Data
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex);
+                //System.Console.WriteLine(ex);
             }
         }
 

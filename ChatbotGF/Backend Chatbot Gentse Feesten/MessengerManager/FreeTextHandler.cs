@@ -52,11 +52,9 @@ namespace Chatbot_GF.MessengerManager
                 }
                 else
                 {
-                    
+                    //Send a message
                 }
             }
-
-            Remote.GetEventByName(text, id, "NL");
         }
         
         private string RemoveNonAlphanumerics(string text)
