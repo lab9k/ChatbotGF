@@ -21,6 +21,7 @@ namespace Chatbot_GF.MessengerManager
             RMmanager = (ReplyManager)rmanager;
             this.Constants =(DataConstants) Constants;
             this.Remote = (RemoteDataManager)Remote;
+            InitReplies();
         }
         private void InitReplies()
         {
@@ -94,7 +95,7 @@ namespace Chatbot_GF.MessengerManager
                 return ReplyStore[string.Join(":", KeywordsFound) + ":response"];
             }catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                //Console.WriteLine(ex);
                 return null;
             }
         }

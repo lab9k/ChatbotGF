@@ -22,7 +22,7 @@ namespace Chatbot_GF.MessengerManager
             this.locationFactory = locationFactory;
         }
 
-        public void SendWelcomeMessage(long id,string lang)
+        public void SendWelcomeMessage(long id, string lang)
         {
             List<SimpleQuickReply> reply = new List<SimpleQuickReply>();
             reply.Add(new QuickReply("text", Constants.GetMessage("Search_location", lang), "SEND_LOCATION_CHOICE°°" + lang));
@@ -63,7 +63,8 @@ namespace Chatbot_GF.MessengerManager
         public void SendLocationResult(long id, List<SearchableLocation> locations, string lang)
         {
             List<SimpleQuickReply> reply = new List<SimpleQuickReply>();
-            foreach(SearchableLocation loc in locations) {
+            foreach (SearchableLocation loc in locations)
+            {
                 reply.Add(new QuickReply("text", loc.PrettyName, $"DEVELOPER_DEFINED_LOCATION°{loc.Name}°{lang}"));
             }
             var text = Constants.GetMessage("Nearest_location", lang);
@@ -76,11 +77,10 @@ namespace Chatbot_GF.MessengerManager
         public void SendTextMessage(long id, string text)
         {
             GenericMessage message = new GenericMessage(id, text);
-            //Console.WriteLine("Basic message: " + api.SendMessageToUser(message).Result);
-            api.SendMessageToUser(message);
+            string result = api.SendMessageToUser(message).Result;
         }
 
-        public void SendGetLocationButton(long id,string lang)
+        public void SendGetLocationButton(long id, string lang)
         {
             GenericMessage message = locationFactory.MakeLocationButton(id, lang);
             //Console.WriteLine("Location map button: " + api.SendMessageToUser(message).Result);
@@ -100,7 +100,7 @@ namespace Chatbot_GF.MessengerManager
                     reply.Add(new QuickReply("text", l, "DEVELOPER_DEFINED_LOCATION°" + l + "°" + lang));
                 }
                 //Max 10 quickreplies, we got more locations. When at first page, add extra button to show second page
-                if(page == 0)
+                if (page == 0)
                 {
                     reply.Add(new QuickReply("text", Constants.GetMessage("More", lang), "GET_EVENT_HERE_NOW°" + 1 + "°" + lang));
                 }
@@ -113,7 +113,7 @@ namespace Chatbot_GF.MessengerManager
                 //Console.WriteLine("All squares: " + api.SendMessageToUser(message).Result);
                 api.SendMessageToUser(message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //Console.WriteLine(ex);
             }
@@ -134,7 +134,7 @@ namespace Chatbot_GF.MessengerManager
         {
             List<SimpleQuickReply> reply = new List<SimpleQuickReply>();
             reply.Add(new QuickReply("text", "Begin opnieuw", "GET_STARTED_PAYLOAD°°" + lang));
-            GenericMessage message = new GenericMessage(id, Constants.GetMessage( "Welcome", lang), reply);
+            GenericMessage message = new GenericMessage(id, Constants.GetMessage("Welcome", lang), reply);
             //Console.WriteLine(api.SendMessageToUser(message).Result);
             api.SendMessageToUser(message);
         }
@@ -150,7 +150,7 @@ namespace Chatbot_GF.MessengerManager
             string[] data = Constants.GetMessage("Day_Block", lang).Split(',');
             foreach (var block in data)
             {
-                reply.Add(new QuickReply("text", block, "DEVELOPER_DEFINED_DAY°" + block.Split(' ')[1]  + "°" + lang));
+                reply.Add(new QuickReply("text", block, "DEVELOPER_DEFINED_DAY°" + block.Split(' ')[1] + "°" + lang));
             }
             reply.Add(new QuickReply("text", Constants.GetMessage("Previous_Block", lang), "SEND_DATE_CHOICE°°" + lang));
             GenericMessage message = new GenericMessage(id, Constants.GetMessage("Choice_For_Date", lang), reply);
@@ -203,4 +203,5 @@ namespace Chatbot_GF.MessengerManager
             api.SendMessageToUser(message);
         }
 
+    }
 }
