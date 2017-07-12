@@ -42,11 +42,21 @@ namespace Chatbot_GF.MessengerManager
             else
             {
                 res = GetResponse(text);
-                if (res != null && res.Length > 3)
+                if (res != null)
                 {
                     RMmanager.SendTextMessage(id, res);
                 }
+                else if(text.Length > 3)
+                {
+                    Remote.GetEventByName(text, id, "NL");
+                }
+                else
+                {
+                    
+                }
             }
+
+            Remote.GetEventByName(text, id, "NL");
         }
         
         private string RemoveNonAlphanumerics(string text)
