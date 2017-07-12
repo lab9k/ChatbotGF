@@ -52,7 +52,7 @@ namespace Chatbot_GF.MessengerManager
                 }
                 else
                 {
-                    //Send a message
+                    RMmanager.SendTextMessage(id, Constants.GetMessage("INVALID_INPUT", "NL"));
                 }
             }
         }
