@@ -97,6 +97,26 @@
     "en": {
       "haschildren": false,
       "payload": "SET_LANGUAGE°EN°"
+    },
+    "ja": {
+      "haschildren": false,
+      "payload": "SEND_LOCATION_CHOICE°°NL"
+    },
+    "nee": {
+      "haschildren": false,
+      "payload": "DEVELOPER_DEFINED_SEARCHFALSE°°NL"
+    },
+    "nieje": {
+      "haschildren": false,
+      "payload": "DEVELOPER_DEFINED_SEARCHFALSE°°GENTS"
+    },
+    "yes": {
+      "haschildren": false,
+      "payload": "SEND_LOCATION_CHOICE°°EN"
+    },
+    "no": {
+      "haschildren": false,
+      "payload": "DEVELOPER_DEFINED_SEARCHFALSE°°EN"
     }
   }
 }
