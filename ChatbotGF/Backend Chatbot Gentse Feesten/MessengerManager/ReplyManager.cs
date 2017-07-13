@@ -134,8 +134,8 @@ namespace Chatbot_GF.MessengerManager
         public void SendInfoForEnding(long id, string lang)
         {
             List<SimpleQuickReply> reply = new List<SimpleQuickReply>();
-            reply.Add(new QuickReply("text", Constants.GetMessage("RESTART", lang), "GET_STARTED_PAYLOAD°°" + lang));
-            GenericMessage message = new GenericMessage(id, Constants.GetMessage("Goodbye", lang), reply);
+            reply.Add(new QuickReply("text", Constants.GetMessage("Goodbye", lang), "GET_STARTED_PAYLOAD°°" + lang));
+            GenericMessage message = new GenericMessage(id, Constants.GetMessage("Restart", lang), reply);
             //Console.WriteLine(api.SendMessageToUser(message).Result);
             api.SendMessageToUser(message);
         }
