@@ -52,7 +52,7 @@ namespace Chatbot_GF.Data
 
         public IMessengerApi GetMessengerApi()
         {
-            return RestClient.For<IMessengerApi>(/*GetConfig("apiUrl", "production")*/"https://graph.facebook.com/v2.6/me/messages?access_token=EAADbmmTTQZBkBAGCYtymjKzMGGTr817rNVgsqNMAFxxVZCkrvKN5dkJfj88rhy3onuVwCAziCWPB1sBl3Jf5C6FujRZC1g6lRaRk1yW0M5EQvSQiKLFtkbNAYSqFpRZAsuBDqUXYpQz2K5PwZCopyzC5skFa1e7LOUhEZAdelk2QZDZD");
+            return RestClient.For<IMessengerApi>(GetConfig("apiUrl", "production"));
         }
 
 
