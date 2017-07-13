@@ -50,7 +50,7 @@ namespace Chatbot_GF.MessageBuilder.Factories
                 }
 
                 string dates = " ";
-                string juli = $" {Constants.GetMessage("MONTH", lang)} ";
+                string juli = $"{Constants.GetMessage("MONTH", lang)} ";
                 if (eve.startDate.ToString().Equals(eve.endDate.ToString()))
                 {
                     string[] helpStart = eve.startDate.ToString().Split('T');
