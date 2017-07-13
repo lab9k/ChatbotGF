@@ -31,9 +31,9 @@
       "EN": "Would you like to check another location?"
     },
     "Restart": {
-      "NL": "Type \"opnieuw\" of klik Reset in het hamburgermenu naast het tekstvak als u een nieuwe zoekopdracht wenst te starten.",
-      "GENTS": "Oas ge nog nekier wilt zoeke, klopt tons \"kere\" of klikt op Reset int menu naast het tekstkootje",
-      "EN": "Type \"again\" or push the button Begin opnieuw"
+      "NL": "Type \"opnieuw\" of klik Start in het hamburgermenu naast het tekstvak als u een nieuwe zoekopdracht wenst te starten.",
+      "GENTS": "Oas ge nog nekier wilt zoeke, klopt tons \"kere\" of klikt op Start int menu naast het tekstkootje",
+      "EN": "Type \"again\" or push the button Start which you can find in the menu"
     },
     "Not_found": {
       "NL": "Sorry, ik kon jammer genoeg geen evenementen vinden.",
