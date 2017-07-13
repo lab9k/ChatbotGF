@@ -6,6 +6,8 @@ namespace Chatbot_GF.BotData
     public class PayloadData : List<string>
     {
         private string _Language;
+        public string Payload { get; set; }
+        public string Value { get; set; }
 
         public PayloadData(string input)
         {
@@ -21,8 +23,7 @@ namespace Chatbot_GF.BotData
             }
         }
 
-        public string Payload { get; set; }
-        public string Value { get; set; }
+       
 
         public string Language {
             get {

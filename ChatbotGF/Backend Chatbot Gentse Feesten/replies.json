@@ -7,6 +7,10 @@
         "response": "Hier is da feestje!"
       },
       "response": "Er zijn hier veel feestjes ja!"
+    },
+    "rector": {
+      "haschildren": false,
+      "response":  "De nieuwe rector? Error 404, not found."
     }
   },
   "payloads": {

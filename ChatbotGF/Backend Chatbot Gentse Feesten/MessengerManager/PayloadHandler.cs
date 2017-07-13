@@ -17,6 +17,7 @@ namespace Chatbot_GF.MessengerManager
         private RemoteDataManager remote;
         private ILocationFactory locationFactory;
         private ILogger<PayloadHandler> _logger;
+
         public PayloadHandler(ILogger<PayloadHandler> logger,IReplyManager manager, ITempUserData userData, IDataConstants dataConstants, IRemoteDataManager remoteDataManager, ILocationFactory locationFactory)
         {
             _logger = logger;

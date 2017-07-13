@@ -53,7 +53,6 @@ namespace Chatbot_GF
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddFile("Logs/Chatbot-{Date}.txt");
-
             app.UseStaticFiles();
             app.UseMvc();
         }
