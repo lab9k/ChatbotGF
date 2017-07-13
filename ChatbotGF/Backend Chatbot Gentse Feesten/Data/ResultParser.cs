@@ -16,7 +16,8 @@ namespace Chatbot_GF.Data
             Event e = new Event();
             foreach (String key in res.Variables)
             {
-                
+                if (!string.IsNullOrWhiteSpace(key))
+                {
                     switch (key)
                     {
                         case "sub":
@@ -58,6 +59,7 @@ namespace Chatbot_GF.Data
                         default:
                             break;
                     }
+                }
                 
             }
             return e;
