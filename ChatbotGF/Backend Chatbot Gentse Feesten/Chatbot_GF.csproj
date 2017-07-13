@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="config.json.example" />
     <Content Include="wwwroot\images\default0.png" />
     <Content Include="wwwroot\index.html" />
     <Content Include="wwwroot\info.html" />
