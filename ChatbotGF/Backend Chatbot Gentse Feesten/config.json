@@ -1,1 +1,8 @@
-﻿
+﻿{
+  "config": {
+    "apiUrl": {
+      "production": "Graph Api URL for production",
+      "testing": "Graph Api URL for testing"
+    }
+  }
+}
