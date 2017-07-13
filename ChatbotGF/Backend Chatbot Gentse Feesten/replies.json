@@ -38,6 +38,10 @@
       "haschildren": false,
       "payload": "GET_USER_LOCATION°true°GENTS"
     },
+    "pisse": {
+      "haschildren": false,
+      "payload": "GET_USER_LOCATION°true°GENTS"
+    },
     "nu": {
       "haschildren": false,
       "payload": "DEVELOPER_DEFINED_LOCATION°ALL°NL"
