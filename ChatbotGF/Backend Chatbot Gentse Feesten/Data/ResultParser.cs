@@ -1,4 +1,5 @@
 ﻿using Chatbot_GF.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,13 @@ namespace Chatbot_GF.Data
     public class ResultParser
     {
 
-        public static Event GetEvent(SparqlResult res)
+        public static Event GetEvent(SparqlResult res, ILogger logger)
         {
             Event e = new Event();
-            foreach (String key in res.Variables)
-            {
-                if (!string.IsNullOrWhiteSpace(key))
+            try {
+                foreach (String key in res.Variables)
                 {
-                    try
+                    if (!string.IsNullOrWhiteSpace(key))
                     {
                         switch (key)
                         {
@@ -62,13 +62,12 @@ namespace Chatbot_GF.Data
                                 break;
                         }
                     }
-                    catch (Exception ex)
-                    {
-
-                    }
                 }
-
-                }
+            } catch (Exception ex)
+            {
+                logger.LogWarning(100, ex, "Exception while parsing event");
+            }
+                
             return e;
         }
 
