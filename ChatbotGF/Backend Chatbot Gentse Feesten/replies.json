@@ -65,6 +65,34 @@
     "ier": {
       "haschildren": false,
       "payload": "GET_USER_LOCATION°false°GENTS"
+    },
+    "gents": {
+      "haschildren": false,
+      "payload": "SET_LANGUAGE°GENTS°"
+    },
+    "english": {
+      "haschildren": false,
+      "payload": "SET_LANGUAGE°EN°"
+    },
+    "nederlands": {
+      "haschildren": false,
+      "payload": "SET_LANGUAGE°NL°"
+    },
+    "engels": {
+      "haschildren": false,
+      "payload": "SET_LANGUAGE°EN°"
+    },
+    "nl": {
+      "haschildren": false,
+      "payload": "SET_LANGUAGE°NL°"
+    },
+    "dutch": {
+      "haschildren": false,
+      "payload": "SET_LANGUAGE°NL°"
+    },
+    "en": {
+      "haschildren": false,
+      "payload": "SET_LANGUAGE°EN°"
     }
   }
 }
