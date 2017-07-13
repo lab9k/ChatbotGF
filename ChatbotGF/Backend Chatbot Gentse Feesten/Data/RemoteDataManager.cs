@@ -54,7 +54,7 @@ namespace Chatbot_GF.Data
             {
                 locationFilters += " || str(?location) = \"" + locations[i].Id + "\"";
             }
-            string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNowHere"), locationFilters, startdatefilter, enddatefilter);
+            string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNow"), locationFilters, startdatefilter, enddatefilter);
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData {Id = id, Language = language });
         }
 
@@ -70,7 +70,7 @@ namespace Chatbot_GF.Data
             {
                 locationFilters += " || str(?location) = \"" + locations[i].Id + "\"";
             }
-            string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNowHere"),locationFilters,startdatefilter,enddatefilter);
+            string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNow"),locationFilters,startdatefilter,enddatefilter,10);
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData {Id = id, Language = lang });
         }
         public  void GetNextEvents(string locationurl,string date, int count, long id,string lang)
