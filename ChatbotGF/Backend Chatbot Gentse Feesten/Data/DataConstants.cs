@@ -42,7 +42,6 @@ namespace Chatbot_GF.Data
         
         private List<SearchableLocation> locations;
         private List<SearchableLocation> toilets;
-        private readonly int TOILET_COUNT = 171;
         private ILogger<DataConstants> _logger;
 
         public List<SearchableLocation> Toilets {
@@ -70,7 +69,7 @@ namespace Chatbot_GF.Data
             IConfiguration toiletStore = builder.Build();
             toilets = new List<SearchableLocation>();
 
-            for (int i = 0; i < TOILET_COUNT; i++)
+            for (int i = 0; i < int.Parse(toiletStore["ToiletsCount"]); i++)
             {
                     
                 toilets.Add(new SearchableLocation { Lon = double.Parse(toiletStore[$"toilets:{i}:{0}"]), Lat = double.Parse(toiletStore[$"toilets:{i}:{1}"]) });
