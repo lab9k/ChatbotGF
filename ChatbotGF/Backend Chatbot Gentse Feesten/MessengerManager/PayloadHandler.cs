@@ -2,6 +2,7 @@
 using Chatbot_GF.Data;
 using Chatbot_GF.MessageBuilder.Factories;
 using Chatbot_GF.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using static Chatbot_GF.BotData.MessengerData;
@@ -15,9 +16,10 @@ namespace Chatbot_GF.MessengerManager
         private DataConstants Constants;
         private RemoteDataManager remote;
         private ILocationFactory locationFactory;
-
-        public PayloadHandler(IReplyManager manager, ITempUserData userData, IDataConstants dataConstants, IRemoteDataManager remoteDataManager, ILocationFactory locationFactory)
+        private ILogger<PayloadHandler> _logger;
+        public PayloadHandler(ILogger<PayloadHandler> logger,IReplyManager manager, ITempUserData userData, IDataConstants dataConstants, IRemoteDataManager remoteDataManager, ILocationFactory locationFactory)
         {
+            _logger = logger;
             rmanager = (ReplyManager)manager;
             UserLanguage = (TempUserData) userData;
             Constants = (DataConstants) dataConstants;
@@ -31,7 +33,6 @@ namespace Chatbot_GF.MessengerManager
             {
                 long id = message.sender.id;
                 PayloadData payload = new PayloadData(message.postback.payload);
-                //Console.WriteLine(payload);
                 switch (payload.Payload)
                 {
                     case "GET_STARTED_PAYLOAD":
@@ -53,7 +54,6 @@ namespace Chatbot_GF.MessengerManager
                     case "GET_TOILET":
                         string[] co = payload.Value.Split(':');
                         SearchableLocation location = Constants.GetClosestsToilet(double.Parse(co[0]), double.Parse(co[1]));
-                        // Console.WriteLine($"Closest location found: {location.PrettyName} ");
                         rmanager.SendGenericMessage(locationFactory.MakeLocationResponse(id, location.Lat, location.Lon, payload.Language));
                         break;
                     case "SET_LANGUAGE":
@@ -88,7 +88,6 @@ namespace Chatbot_GF.MessengerManager
                     case "DEVELOPER_DEFINED_COORDINATES":
                         string[] data = payload.Value.Split(':');
                         List<SearchableLocation> locatio = Constants.GetClosestLocation(new Coordinates { lat = double.Parse(data[1]), lon = double.Parse(data[0]) },3);
-                       // Console.WriteLine($"Closest location found: {location.PrettyName} ");
                         rmanager.SendLocationResult(id, locatio, payload.Language);
                         break;
                     case "DEVELOPER_DEFINED_DESCRIPTION":
@@ -101,13 +100,10 @@ namespace Chatbot_GF.MessengerManager
                     case "DEVELOPER_DEFINED_HOURS_COMP":
                         string[] da = payload.Value.Split('|');
                         payload.Value = $"{da[1]}{da[0]}:00+02:00";
-                        //rmanager.SendTextMessage(id, value);
-                        //Console.WriteLine("Datum: " + payload.Value);
                         remote.GetEventsAtTime(id, payload.Value,payload.Language);
                         break;
 
                     case "DEVELOPER_DEFINED_NEXT":
-                        // moet nog normaal gezet worden maar voor test gevallen is het deze tijd
                         int pos = payload.Value.IndexOf("-_-");
                         remote.GetNextEvents(payload.Value.Substring(0, pos), payload.Value.Substring(pos + 3), 3, id, payload.Language);
                         break;                   
@@ -118,7 +114,8 @@ namespace Chatbot_GF.MessengerManager
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.LogWarning(100, ex, "Error while parsing payload data");
+
             }
 
         }

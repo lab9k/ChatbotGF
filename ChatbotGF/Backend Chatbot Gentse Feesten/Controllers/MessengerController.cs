@@ -32,6 +32,7 @@ namespace Chatbot_GF.Controllers
             var allUrlKeyValues = Request.Query;
             if (allUrlKeyValues["hub.mode"] == "subscribe" && allUrlKeyValues["hub.verify_token"] == "test123")
             {
+                _logger.LogInformation("Messenger GET verification received");
                 var returnVal = allUrlKeyValues["hub.challenge"];
                 return Json(int.Parse(returnVal));
             }
@@ -42,8 +43,7 @@ namespace Chatbot_GF.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] MessengerData data)
         {
-            _logger.LogInformation("Messenger data received");
-            //System.Console.WriteLine(JsonConvert.SerializeObject(data));
+            
 
             Task.Factory.StartNew(() =>
             {
@@ -55,12 +55,14 @@ namespace Chatbot_GF.Controllers
                         Messaging currentMessage = mhandler.MessageRecognized(message);
                         if (currentMessage.postback != null)
                         {
+                            _logger.LogInformation("Messenger postback data received");
                             phandler.handle(message);
                         }
                         else if (!string.IsNullOrWhiteSpace(currentMessage?.message?.quick_reply?.payload))
                         {
                             //set the quick reply payload as the message payload
                             currentMessage.postback = new Postback { payload = message.message.quick_reply.payload };
+                            _logger.LogInformation("Messenger quickreply data received");
                             phandler.handle(message);
                         }
                         else if(currentMessage?.message?.attachments != null)
@@ -69,20 +71,19 @@ namespace Chatbot_GF.Controllers
                             {
                                 Attachment locationAtt = currentMessage?.message?.attachments[0];
                                 Coordinates coords = locationAtt.payload?.coordinates;
-                                //Console.WriteLine($"Coordinates Received: {coords.lon} {coords.lat}");
                                 string lang = uData.GetLanguage(currentMessage.sender.id);
                                 if (string.IsNullOrWhiteSpace(lang))
                                     lang = "";
                                 if (!uData.WantsToilet(message.sender.id))
                                 {
                                     currentMessage.postback = new Postback { payload = $"DEVELOPER_DEFINED_COORDINATES°{coords.lon}:{coords.lat}°{lang}" };
-                                    //Console.WriteLine("False " + currentMessage.postback);
+                                    _logger.LogInformation($"Messenger locationdata received, toilet: false, lat: {coords.lat}, long {coords.lon}");
                                     phandler.handle(message);
                                 }
                                 else
                                 {
                                     currentMessage.postback = new Postback { payload = $"GET_TOILET°{coords.lon}:{coords.lat}°{lang}" };
-                                    //Console.WriteLine("True " +  currentMessage.postback);
+                                    _logger.LogInformation($"Messenger locationdata received, toilet: true, lat: {coords.lat}, long {coords.lon}");
                                     phandler.handle(message);
                                 }
                                 uData.Remove(message.sender.id); //Remove the user from the set
@@ -95,6 +96,7 @@ namespace Chatbot_GF.Controllers
                         }
                         else
                         {
+                            _logger.LogInformation("Messenger text data received");
                             mhandler.CheckForKnowText(currentMessage);
                         }
                     }

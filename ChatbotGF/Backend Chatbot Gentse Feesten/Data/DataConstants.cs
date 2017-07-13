@@ -17,6 +17,8 @@ namespace Chatbot_GF.Data
         private IConfigurationRoot MessagesStore;
         private IConfigurationRoot QueryStore;
 
+        
+
         public List<SearchableLocation> Locations
         {
             get {

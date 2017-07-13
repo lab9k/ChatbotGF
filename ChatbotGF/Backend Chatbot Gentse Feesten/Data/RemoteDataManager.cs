@@ -22,9 +22,11 @@ namespace Chatbot_GF.Data
         private ReplyManager rm;
         private DataConstants constants;
         private ICarouselFactory carouselFactory;
+        private ILogger<RemoteDataManager> _logger;
 
-        public RemoteDataManager(IDataConstants constants,IReplyManager rManager, ICarouselFactory carouselFactory)
+        public RemoteDataManager(ILogger<RemoteDataManager> logger, IDataConstants constants,IReplyManager rManager, ICarouselFactory carouselFactory)
         {
+            _logger = logger;
             endpoint = new SparqlRemoteEndpoint(new Uri("https://stad.gent/sparql"), "http://stad.gent/gentse-feesten/");
             rm =(ReplyManager) rManager;
             this.constants = (DataConstants) constants;
@@ -41,6 +43,7 @@ namespace Chatbot_GF.Data
             string enddatefilter = "?enddate > \"" + formattedTime + "\" ^^ xsd:dateTime";
             string nextdatefilter= "?startdate > \"" + formattedTime + "\" ^^ xsd:dateTime";
             string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNowHere"), locationfilter, startdatefilter, enddatefilter, nextdatefilter,count);
+            _logger.LogInformation("Sending SparQL query: EventsHereNow");
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData { Id = id, Language = language });
         }
 
@@ -55,6 +58,7 @@ namespace Chatbot_GF.Data
                 locationFilters += " || str(?location) = \"" + locations[i].Id + "\"";
             }
             string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNow"), locationFilters, startdatefilter, enddatefilter);
+            _logger.LogInformation("Sending SparQL query: EventsAtTime");
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData {Id = id, Language = language });
         }
 
@@ -71,11 +75,13 @@ namespace Chatbot_GF.Data
                 locationFilters += " || str(?location) = \"" + locations[i].Id + "\"";
             }
             string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNow"),locationFilters,startdatefilter,enddatefilter,10);
+            _logger.LogInformation("Sending SparQL query: EventsNow");
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData {Id = id, Language = lang });
         }
         public  void GetNextEvents(string locationurl,string date, int count, long id,string lang)
         {
             string query = constants.GetQuery("base") + string.Format(constants.GetQuery("NextEventsOnLocation"), locationurl, date, count);
+            _logger.LogInformation("Sending SparQL query: NextEvents");
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData { Id = id, Language = lang });
         }
         public void GetEventByName(string locationName, long id, string lang)
@@ -84,6 +90,7 @@ namespace Chatbot_GF.Data
             {
                 string formattedTime = constants.Now.ToString("yyyy-MM-ddTHH:mm:sszzz");
                 string query = constants.GetQuery("base") + string.Format(constants.GetQuery("SearchByName"), locationName.ToLower(), formattedTime);
+                _logger.LogInformation("Sending SparQL query: EventsByName");
                 endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData { Id = id, Language = lang });
             }catch(Exception ex)
             {
@@ -94,6 +101,7 @@ namespace Chatbot_GF.Data
 
         public void callback(SparqlResultSet results, Object u)
         {
+            _logger.LogInformation($"Found {results.Count} results in query");
             try
             {
                 List<Event> events = new List<Event>();
@@ -104,16 +112,8 @@ namespace Chatbot_GF.Data
                     CallbackData user = (CallbackData)u;
                     foreach (SparqlResult res in results)
                     {
-                        try
-                        {
-                            System.Console.WriteLine("Voor");
                             Event e = ResultParser.GetEvent(res);
-                            System.Console.WriteLine("Na");
                             events.Add(e);
-                        } catch (Exception ex)
-                        {
-                            //System.Console.WriteLine(ex);
-                        }
                     }
                     rm.SendTextMessage(user.Id, constants.GetMessage("Found", user.Language));
                     String result = api.SendMessageToUser(carouselFactory.makeCarousel(user.Id, events,user.Language)).Result;
@@ -134,7 +134,7 @@ namespace Chatbot_GF.Data
             }
             catch (Exception ex)
             {
-                //System.Console.WriteLine(ex);
+                _logger.LogWarning(100,ex, "Error while getting SparQL data");
             }
         }
 

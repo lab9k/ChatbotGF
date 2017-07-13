@@ -17,8 +17,6 @@ namespace Chatbot_GF.Data
             foreach (String key in res.Variables)
             {
                 
-                try
-                {
                     switch (key)
                     {
                         case "sub":
@@ -60,10 +58,7 @@ namespace Chatbot_GF.Data
                         default:
                             break;
                     }
-                }catch(Exception ex)
-                {
-                    System.Console.WriteLine(ex);
-                }
+                
             }
             return e;
         }
