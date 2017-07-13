@@ -18,50 +18,57 @@ namespace Chatbot_GF.Data
             {
                 if (!string.IsNullOrWhiteSpace(key))
                 {
-                    switch (key)
+                    try
                     {
-                        case "sub":
-                            e.id = res[key].ToString();
-                            break;
-                        case "url":
-                            e.url = normalizeUrl(res[key].ToString());
-                            break;
-                        case "name":
-                            e.name.nl = normalizeString(res[key].ToString());
-                            break;
-                        case "startdate":
-                            e.startDate = normalizeUrl(res[key].ToString());
-                            break;
-                        case "enddate":
-                            e.endDate = normalizeUrl(res[key].ToString());
-                            break;
-                        case "description":
-                            e.description.nl = normalizeString(res[key].ToString());
-                            break;
-                        case "organizer":
-                            e.organizer = res[key].ToString();
-                            break;
-                        case "image":
-                            e.image = normalizeUrl(res[key].ToString());
-                            break;
-                        case "location":
-                            e.location = normalizeUrl(res[key].ToString());
-                            break;
-                        case "isFree":
-                            e.isAccessibleForFree = ParseBool(res[key].ToString());
-                            break;
-                        case "isWheelchairUnfriendly":
-                            e.isWheelchairUnfriendly = ParseBool(res[key].ToString());
-                            break;
-                        case "location_name":
-                            e.locationName = normalizeString(res[key].ToString());
-                            break;
-                        default:
-                            break;
+                        switch (key)
+                        {
+                            case "sub":
+                                e.id = res[key].ToString();
+                                break;
+                            case "url":
+                                e.url = normalizeUrl(res[key].ToString());
+                                break;
+                            case "name":
+                                e.name.nl = normalizeString(res[key].ToString());
+                                break;
+                            case "startdate":
+                                e.startDate = normalizeUrl(res[key].ToString());
+                                break;
+                            case "enddate":
+                                e.endDate = normalizeUrl(res[key].ToString());
+                                break;
+                            case "description":
+                                e.description.nl = normalizeString(res[key].ToString());
+                                break;
+                            case "organizer":
+                                e.organizer = res[key].ToString();
+                                break;
+                            case "image":
+                                e.image = normalizeUrl(res[key].ToString());
+                                break;
+                            case "location":
+                                e.location = normalizeUrl(res[key].ToString());
+                                break;
+                            case "isFree":
+                                e.isAccessibleForFree = ParseBool(res[key].ToString());
+                                break;
+                            case "isWheelchairUnfriendly":
+                                e.isWheelchairUnfriendly = ParseBool(res[key].ToString());
+                                break;
+                            case "location_name":
+                                e.locationName = normalizeString(res[key].ToString());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
                     }
                 }
-                
-            }
+
+                }
             return e;
         }
 
