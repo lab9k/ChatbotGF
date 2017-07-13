@@ -18,6 +18,10 @@
       "haschildren": false,
       "payload": "GET_STARTED_PAYLOAD°°EN"
     },
+    "restart": {
+      "haschildren": false,
+      "payload": "GET_STARTED_PAYLOAD°°EN"
+    },
     "again": {
       "haschildren": false,
       "payload": "GET_STARTED_PAYLOAD°°EN"
