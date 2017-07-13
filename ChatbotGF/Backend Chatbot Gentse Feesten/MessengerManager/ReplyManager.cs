@@ -17,9 +17,10 @@ namespace Chatbot_GF.MessengerManager
 
         public ReplyManager(IDataConstants Constants, ILocationFactory locationFactory)
         {
-            api = RestClientBuilder.GetMessengerApi();
             this.Constants = (DataConstants)Constants;
             this.locationFactory = locationFactory;
+            api = this.Constants.GetMessengerApi();
+
         }
 
         public void SendWelcomeMessage(long id, string lang)

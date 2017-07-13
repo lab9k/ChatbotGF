@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Chatbot_GF.MessengerManager;
 using Chatbot_GF.Data;
 using Chatbot_GF.MessageBuilder.Factories;
+using Chatbot_GF.Client;
 
 namespace Chatbot_GF
 {

@@ -31,6 +31,7 @@ namespace Chatbot_GF.Data
             rm =(ReplyManager) rManager;
             this.constants = (DataConstants) constants;
             this.carouselFactory = carouselFactory;
+
         }
 
        
@@ -105,7 +106,7 @@ namespace Chatbot_GF.Data
             try
             {
                 List<Event> events = new List<Event>();
-                IMessengerApi api = RestClientBuilder.GetMessengerApi();
+                IMessengerApi api = constants.GetMessengerApi();
                 
                 if (results.Count > 0 && u is CallbackData)
                 {
