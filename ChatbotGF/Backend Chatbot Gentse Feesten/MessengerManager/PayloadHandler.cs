@@ -14,8 +14,6 @@ namespace Chatbot_GF.MessengerManager
         private TempUserData UserLanguage;
         private DataConstants Constants;
         private RemoteDataManager remote;
-
-        private static PayloadHandler instance;
         private ILocationFactory locationFactory;
 
         public PayloadHandler(IReplyManager manager, ITempUserData userData, IDataConstants dataConstants, IRemoteDataManager remoteDataManager, ILocationFactory locationFactory)
@@ -112,6 +110,12 @@ namespace Chatbot_GF.MessengerManager
                         // moet nog normaal gezet worden maar voor test gevallen is het deze tijd
                         int pos = payload.Value.IndexOf("-_-");
                         remote.GetNextEvents(payload.Value.Substring(0, pos), payload.Value.Substring(pos + 3), 3, id, payload.Language);
+                        break;
+                    case "GET_HELP":
+                        rmanager.SendHelpMessage(id);
+                        break;
+                    case "GET_HELP_PAGE":
+                        rmanager.SendTextMessage(id, "Comming Soon (2017)");
                         break;
                     default:
                         //do nothing
