@@ -16,6 +16,14 @@ namespace Chatbot_GF.Data
         private IConfigurationRoot LocationsStore;
         private IConfigurationRoot MessagesStore;
         private IConfigurationRoot QueryStore;
+        private IConfigurationRoot ConfigStore;
+
+        public DataConstants()
+        {
+            MessagesStore = init("messages.json");
+            QueryStore = init("query.json");
+            ConfigStore = init("config.json");
+        }
 
         
 
@@ -40,34 +48,21 @@ namespace Chatbot_GF.Data
             }
         }
 
-        private void initQueries()
-        {
-            var builder = new ConfigurationBuilder()
-                              .SetBasePath(Directory.GetCurrentDirectory())
-                              .AddJsonFile("queries.json");
-            QueryStore = builder.Build();
-        }
 
         private void initToilets()
         {
-            try
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("locations.json");
+
+            IConfiguration toiletStore = builder.Build();
+            toilets = new List<SearchableLocation>();
+
+            for (int i = 0; i < TOILET_COUNT; i++)
             {
-                var builder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("locations.json");
-
-                IConfiguration toiletStore = builder.Build();
-                toilets = new List<SearchableLocation>();
-
-                for (int i = 0; i < TOILET_COUNT; i++)
-                {
                     
-                    //Console.WriteLine("Toilet toegevoegd");
-                    toilets.Add(new SearchableLocation { Lon = double.Parse(toiletStore[$"toilets:{i}:{0}"]), Lat = double.Parse(toiletStore[$"toilets:{i}:{1}"]) });
-                }
-            }catch(Exception ex)
-            {
-                Console.WriteLine(ex);
+                //Console.WriteLine("Toilet toegevoegd");
+                toilets.Add(new SearchableLocation { Lon = double.Parse(toiletStore[$"toilets:{i}:{0}"]), Lat = double.Parse(toiletStore[$"toilets:{i}:{1}"]) });
             }
         }
 
@@ -93,10 +88,6 @@ namespace Chatbot_GF.Data
 
         public string GetQuery(string name)
         {
-            if(QueryStore == null)
-            {
-                initQueries();
-            }
             return QueryStore[name];
         }
 
@@ -105,67 +96,56 @@ namespace Chatbot_GF.Data
             get { return DateTime.Now.AddDays(5).AddHours(6); }
         }
 
-        private void initMessages()
+        private IConfigurationRoot init(string json)
         {
-            try
-            {
-                var builder = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile("messages.json");
-                MessagesStore = builder.Build();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            var builder = new ConfigurationBuilder()
+                               .SetBasePath(Directory.GetCurrentDirectory())
+                               .AddJsonFile(json);
+            return builder.Build();
         }
+
 
         private void initLocations()
         {
-            try
+            var builder = new ConfigurationBuilder()
+                                .SetBasePath(Directory.GetCurrentDirectory())
+                                .AddJsonFile("locations.json");
+            LocationsStore = builder.Build();
+            locations = new List<SearchableLocation>();
+            numberLocations = int.Parse(LocationsStore["LocationsCount"]);
+            for (int i = 0; i < numberLocations; i++)
             {
-                var builder = new ConfigurationBuilder()
-                                    .SetBasePath(Directory.GetCurrentDirectory())
-                                    .AddJsonFile("locations.json");
-                LocationsStore = builder.Build();
-                locations = new List<SearchableLocation>();
-                numberLocations = int.Parse(LocationsStore["LocationsCount"]);
-                for (int i = 0; i < numberLocations; i++)
+                locations.Add(new SearchableLocation
                 {
-                    locations.Add(new SearchableLocation
+                    Name = LocationsStore[$"locations:{i}:Name"],
+                    PrettyName = LocationsStore[$"locations:{i}:PrettyName"],
+                    Id = LocationsStore[$"locations:{i}:Id"],
+                    Lat = double.Parse(LocationsStore[$"locations:{i}:Lat"]),
+                    Lon = double.Parse(LocationsStore[$"locations:{i}:Lon"])
+                });
+                locations[i].Search = new List<string>();
+                if (!string.IsNullOrWhiteSpace(LocationsStore[$"locations:{i}:SearchCount"]))
+                {
+                    int count = int.Parse(LocationsStore[$"locations:{i}:SearchCount"]);
+                    for (int j=0; j < count; j++)
                     {
-                        Name = LocationsStore[$"locations:{i}:Name"],
-                        PrettyName = LocationsStore[$"locations:{i}:PrettyName"],
-                        Id = LocationsStore[$"locations:{i}:Id"],
-                        Lat = double.Parse(LocationsStore[$"locations:{i}:Lat"]),
-                        Lon = double.Parse(LocationsStore[$"locations:{i}:Lon"])
-                    });
-                    locations[i].Search = new List<string>();
-                    if (!string.IsNullOrWhiteSpace(LocationsStore[$"locations:{i}:SearchCount"]))
-                    {
-                        int count = int.Parse(LocationsStore[$"locations:{i}:SearchCount"]);
-                        for (int j=0; j < count; j++)
-                        {
-                            string tag = LocationsStore[$"locations:{i}:Search:{j}"];
-                            //Console.WriteLine("Tag found: " + tag);
-                            locations[i].Search.Add(tag);
-                        }
+                        string tag = LocationsStore[$"locations:{i}:Search:{j}"];
+                        //Console.WriteLine("Tag found: " + tag);
+                        locations[i].Search.Add(tag);
                     }
-                    
                 }
-            }catch(Exception ex)
-            {
-                Console.WriteLine(ex);
+                    
             }
         }
 
         public string GetMessage(string name, string locale)
         {
-            if(MessagesStore == null)
-            {
-                initMessages();
-            }
             return MessagesStore[$"messages:{name}:{locale}"];
+        }
+
+        public string GetConfig(string type, string name)
+        {
+            return ConfigStore[$"config:{type}:{name}"];
         }
 
         public SearchableLocation GetLocation(string name){
