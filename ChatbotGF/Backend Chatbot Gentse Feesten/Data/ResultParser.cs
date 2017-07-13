@@ -18,15 +18,12 @@ namespace Chatbot_GF.Data
             try {
                 foreach (String key in res.Variables)
                 {
-                    if (!string.IsNullOrWhiteSpace(key))
+                    if (!string.IsNullOrWhiteSpace(key) && res[key] != null)
                     {
                         switch (key)
                         {
                             case "sub":
                                 e.id = res[key].ToString();
-                                break;
-                            case "url":
-                                e.url = normalizeUrl(res[key].ToString());
                                 break;
                             case "name":
                                 e.name.nl = normalizeString(res[key].ToString());
@@ -86,6 +83,9 @@ namespace Chatbot_GF.Data
 
         private static string normalizeUrl(string url)
         {
+            if (string.IsNullOrWhiteSpace(url))
+                return null;
+
             url = url.Replace(" ", "%20");
             int lastIndex = url.LastIndexOf('^') - 1 ;
             if (lastIndex > 0)

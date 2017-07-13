@@ -113,7 +113,7 @@ namespace Chatbot_GF.Data
                     CallbackData user = (CallbackData)u;
                     foreach (SparqlResult res in results)
                     {
-                            Event e = ResultParser.GetEvent(res);
+                            Event e = ResultParser.GetEvent(res,_logger);
                             events.Add(e);
                     }
                     rm.SendTextMessage(user.Id, constants.GetMessage("Found", user.Language));

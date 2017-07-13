@@ -1,5 +1,6 @@
 ﻿using Chatbot_GF.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,10 +15,12 @@ namespace Chatbot_GF.MessengerManager
         private ReplyManager RMmanager;
         private DataConstants Constants;
         private RemoteDataManager Remote;
+        private ILogger<FreeTextHandler> _logger;
 
 
-        public FreeTextHandler(IReplyManager rmanager, IDataConstants Constants, IRemoteDataManager Remote)
+        public FreeTextHandler(ILogger<FreeTextHandler> logger,IReplyManager rmanager, IDataConstants Constants, IRemoteDataManager Remote)
         {
+            _logger = logger;
             RMmanager = (ReplyManager)rmanager;
             this.Constants =(DataConstants) Constants;
             this.Remote = (RemoteDataManager)Remote;
@@ -25,6 +28,8 @@ namespace Chatbot_GF.MessengerManager
         }
         private void InitReplies()
         {
+            _logger.LogInformation(this.GetType().ToString() + "Loading replies");
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                .AddJsonFile("replies.json");
@@ -37,6 +42,8 @@ namespace Chatbot_GF.MessengerManager
             string res;
             if (!string.IsNullOrEmpty(Constants.GetLocationBySearchTag(text)?.Id))
             {
+                _logger.LogInformation(this.GetType().ToString() + "Know location found");
+
                 Remote.GetEventsHereNow(id, Constants.GetLocationBySearchTag(text).Id, Constants.Now, "NL", 3);
             }
             else
@@ -45,13 +52,18 @@ namespace Chatbot_GF.MessengerManager
                 if (res != null)
                 {
                     RMmanager.SendTextMessage(id, res);
+                    _logger.LogInformation(this.GetType().ToString() + "Keywords found, replying with defined message");
+
                 }
                 else if(text.Length > 3)
                 {
+                    _logger.LogInformation(this.GetType().ToString() + "Searching for event by name");
                     Remote.GetEventByName(text, id, "NL");
                 }
                 else
                 {
+                    _logger.LogInformation(this.GetType().ToString() + "Input too short");
+
                     RMmanager.SendTextMessage(id, Constants.GetMessage("INVALID_INPUT", "NL"));
                 }
             }
@@ -80,18 +92,14 @@ namespace Chatbot_GF.MessengerManager
                 while (count < words.Count)
                 {                    
                     string query = string.Join(":", KeywordsFound);
-                    //Console.WriteLine("Searching " + query + ":" + words[count]);
-                    //Console.WriteLine(ReplyStore["keywords:feestje:waar:response:nl"]);
                     if (!string.IsNullOrWhiteSpace(ReplyStore.GetSection(query + ":" + words[count])?.GetValue<string>("response")))
                     {
-                       // Console.WriteLine(query + ":" + words[count] + "Keyword found!");
                         KeywordsFound.Add(words[count]);
                         words.RemoveAt(count);
                         count = 0; //restart
                     }
                     else if (ReplyStore[query + ":haschildren"] != null && ReplyStore[query + ":haschildren"] == "false")
                     {
-                       // Console.WriteLine("No children, strop recursion");
                         break; //stop recursion, object has no child keywords
                     }
                     else
@@ -99,11 +107,9 @@ namespace Chatbot_GF.MessengerManager
                         count++;
                     }
                 }
-                //Console.WriteLine(string.Join(":", KeywordsFound) + ":response");
                 return ReplyStore[string.Join(":", KeywordsFound) + ":response"];
-            }catch(Exception ex)
-            {
-                //Console.WriteLine(ex);
+            }catch(Exception ex) {
+                _logger.LogWarning(101, ex, "Exception while searching for keyword");
                 return null;
             }
         }
@@ -121,19 +127,15 @@ namespace Chatbot_GF.MessengerManager
                 while (count < words.Count)
                 {
                     string query = string.Join(":", KeywordsFound);
-                   // Console.WriteLine("Searching " + query + ":" + words[count]);
-                    //Console.WriteLine(ReplyStore["keywords:feestje:waar:response:nl"]);
 
                     if (!string.IsNullOrWhiteSpace(ReplyStore.GetSection(query + ":" + words[count])?.GetValue<string>("payload")))
                     {
-                        //Console.WriteLine(query + ":" + words[count] + "Keyword found!");
                         KeywordsFound.Add(words[count]);
                         words.RemoveAt(count);
                         count = 0; //restart
                     }
                     else if (ReplyStore[query + ":haschildren"] != null && ReplyStore[query + ":haschildren"] == "false")
                     {
-                       // Console.WriteLine("No children, stop recursion");
                         break; //stop recursion, object has no child keywords
                     }
                     else
@@ -141,11 +143,11 @@ namespace Chatbot_GF.MessengerManager
                         count++;
                     }
                 }
-                //Console.WriteLine(string.Join(":", KeywordsFound) + ":payload");
                 return ReplyStore[string.Join(":", KeywordsFound) + ":payload"];
             }
             catch (Exception ex)
             {
+                _logger.LogWarning(101, ex, "Exception while searching for keyword");
                 return null;
             }
         }

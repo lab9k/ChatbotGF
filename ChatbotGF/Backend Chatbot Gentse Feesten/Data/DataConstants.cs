@@ -1,6 +1,7 @@
 ﻿using Chatbot_GF.Client;
 using Chatbot_GF.Model;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestEase;
 using System;
@@ -20,8 +21,9 @@ namespace Chatbot_GF.Data
         private IConfigurationRoot QueryStore;
         private IConfigurationRoot ConfigStore;
 
-        public DataConstants()
+        public DataConstants(ILogger<DataConstants> logger)
         {
+            _logger = logger;
             MessagesStore = init("messages.json");
             QueryStore = init("queries.json");
             ConfigStore = init("config.json");
@@ -41,6 +43,7 @@ namespace Chatbot_GF.Data
         private List<SearchableLocation> locations;
         private List<SearchableLocation> toilets;
         private readonly int TOILET_COUNT = 171;
+        private ILogger<DataConstants> _logger;
 
         public List<SearchableLocation> Toilets {
             get {
@@ -58,6 +61,8 @@ namespace Chatbot_GF.Data
 
         private void initToilets()
         {
+            _logger.LogInformation(this.GetType().ToString() + "Loading toilets");
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("locations.json");
@@ -68,7 +73,6 @@ namespace Chatbot_GF.Data
             for (int i = 0; i < TOILET_COUNT; i++)
             {
                     
-                //Console.WriteLine("Toilet toegevoegd");
                 toilets.Add(new SearchableLocation { Lon = double.Parse(toiletStore[$"toilets:{i}:{0}"]), Lat = double.Parse(toiletStore[$"toilets:{i}:{1}"]) });
             }
         }
@@ -105,6 +109,8 @@ namespace Chatbot_GF.Data
 
         private IConfigurationRoot init(string json)
         {
+            _logger.LogInformation(this.GetType().ToString() + $"Loading {json}");
+
             var builder = new ConfigurationBuilder()
                                .SetBasePath(Directory.GetCurrentDirectory())
                                .AddJsonFile(json);
@@ -114,6 +120,8 @@ namespace Chatbot_GF.Data
 
         private void initLocations()
         {
+            _logger.LogInformation(this.GetType().ToString() + "Loading Location");
+
             var builder = new ConfigurationBuilder()
                                 .SetBasePath(Directory.GetCurrentDirectory())
                                 .AddJsonFile("locations.json");
@@ -137,7 +145,6 @@ namespace Chatbot_GF.Data
                     for (int j=0; j < count; j++)
                     {
                         string tag = LocationsStore[$"locations:{i}:Search:{j}"];
-                        //Console.WriteLine("Tag found: " + tag);
                         locations[i].Search.Add(tag);
                     }
                 }
