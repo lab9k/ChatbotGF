@@ -185,6 +185,16 @@
     },
     "INVALID_INPUT": {
       "NL": "Geef tenminste één trefwoord met 4 of meer karakters op."
+    },
+    "Goodbye": {
+      "NL": "Veel plezier, om te herstarten druk op de knop Begin opnieuw",
+      "GENTS": "D'amuuzeleute, ge kunt altijd opnieuw beginnen door op de knop te drukken",
+      "EN": "Have fun, feel free to press Restart"
+    },
+    "RESTART": {
+      "NL": "Begin opnieuw",
+      "GENTS": "Begin opnieuw",
+      "EN": "Restart"
     }
   }
-  }
+}
