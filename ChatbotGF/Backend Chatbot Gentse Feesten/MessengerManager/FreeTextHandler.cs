@@ -37,7 +37,7 @@ namespace Chatbot_GF.MessengerManager
             string res;
             if (!string.IsNullOrEmpty(Constants.GetLocationBySearchTag(text)?.Id))
             {
-                Remote.GetNextEvents(Constants.GetLocationBySearchTag(text).Id, Constants.Now.ToString("yyyy-MM-ddTHH:mm:sszzz"), 3, id, "NL");
+                Remote.GetEventsHereNow(id, Constants.GetLocationBySearchTag(text).Id, Constants.Now, "NL", 3);
             }
             else
             {

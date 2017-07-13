@@ -33,13 +33,14 @@ namespace Chatbot_GF.Data
 
        
 
-        public void GetEventsHereNow(long id,string location,DateTime now,string language)
+        public void GetEventsHereNow(long id,string location,DateTime now,string language, int count)
         {
             string formattedTime = now.ToString("yyyy-MM-ddTHH:mm:sszzz");
             string locationfilter = "str(?location) = \"" + location + "\"";
             string startdatefilter = "?startdate < \"" + formattedTime + "\" ^^ xsd:dateTime";
             string enddatefilter = "?enddate > \"" + formattedTime + "\" ^^ xsd:dateTime";
-            string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNowHere"), locationfilter, startdatefilter, enddatefilter);
+            string nextdatefilter= "?startdate > \"" + formattedTime + "\" ^^ xsd:dateTime";
+            string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNowHere"), locationfilter, startdatefilter, enddatefilter, nextdatefilter,count);
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData { Id = id, Language = language });
         }
 

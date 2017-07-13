@@ -1,6 +1,6 @@
 ﻿{
   "Base": "PREFIX schema:<http://schema.org/> SELECT * WHERE{ ?sub a schema:Event . OPTIONAL {?sub schema:url ?url. } OPTIONAL {?sub schema:location ?location.} OPTIONAL {?sub schema:name ?name.} OPTIONAL {?sub schema:startDate ?startdate. } OPTIONAL {?sub schema:endDate ?enddate. } OPTIONAL {?sub schema:description ?description. } OPTIONAL {?sub schema:location/schema:name ?location_name } OPTIONAL {?sub schema:location/schema:address [ schema:streetAddress ?location_address; schema:postalCode ?location_postal_code; ]} OPTIONAL {?sub schema:isAccessibleForFree ?isFree.} OPTIONAL {?sub schema:organizer ?organizer. } OPTIONAL { ?sub schema:image/schema:url ?image. }",
-  "EventsNowHere": "FILTER( ({0}) && {1} && {2}) }} ORDER BY ASC(?startdate) Limit 10 ",
+  "EventsNowHere": "FILTER( (({0}) && {1} && {2}) || {3}) }} ORDER BY ASC(?startdate) Limit {} ",
   "NextEventsOnLocation": "FILTER(str(?location) = \"{0}\" && ?startdate > \"{1}\" ^^ xsd:dateTime)}} ORDER BY ASC(?startdate) Limit {2}",
   "EventsAtTime": "FILTER( ({0}) && {1}) }}",
   "SearchByName": "FILTER(contains(lcase(?name), \"{0}\") && ?startdate > \"{1}\" ^^ xsd:dateTime)}} ORDER BY ASC(?startdate) Limit 3"
