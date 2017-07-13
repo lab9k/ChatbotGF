@@ -185,6 +185,11 @@
     },
     "INVALID_INPUT": {
       "NL": "Geef tenminste één trefwoord met 4 of meer karakters op."
+    },
+    "Goodbye": {
+      "NL": "Begin opnieuw",
+      "GENTS": "Begin opnieuw",
+      "EN": "Restart"
     }
   }
-  }
+}

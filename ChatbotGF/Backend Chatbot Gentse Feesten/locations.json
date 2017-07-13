@@ -62,7 +62,7 @@
       "Lon": 3.728229,
       "Lat": 51.051073,
       "SearchCount": 2,
-      "Search": [ "luisterplein",  "francois laurentplein" ]
+      "Search": [ "luisterplein", "francois laurentplein" ]
     },
     {
       "Name": "GROENTENMARKT",
@@ -153,7 +153,8 @@
       "Lon": 3.72824,
       "Lat": 51.05611,
       "SearchCount": 2,
-      "Search": [ "charla", "charlatan" ]},
+      "Search": [ "charla", "charlatan" ]
+    },
     {
       "Name": "Het Huis van Alijn",
       "PrettyName": "Het Huis van Alijn",
@@ -164,6 +165,7 @@
       "Search": [ "alijn", "huis van alijn", "het huis van alijn" ]
     }
   ],
+  "ToiletsCount" :  171,
   "toilets": [
     [ 3.7294641044784, 51.063988153217 ],
     [ 3.7203060201168, 51.023095506817 ],
