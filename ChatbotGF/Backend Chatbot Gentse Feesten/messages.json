@@ -134,13 +134,13 @@
       "EN": "What is it?"
     },
     "MONTH": {
-      "NL": "juli",
-      "GENTS": "juli",
-      "EN": "july"
+      "NL": "/07",
+      "GENTS": "/07",
+      "EN": "/07"
     },
     "FREE": {
       "NL": "Gratis",
-      "GENTS": "Van de veurniet",
+      "GENTS": "Veurniet",
       "EN": "Free"
     },
     "NOTFREE": {
