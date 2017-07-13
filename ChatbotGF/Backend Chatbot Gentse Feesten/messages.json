@@ -11,8 +11,8 @@
       "EN": "Previous"
     },
     "Which_location": {
-      "NL": "Over welke locatie wil je iets meer van weten?",
-      "GENTS": "Is ter een fiestpleine dadde wilt bezoeken?",
+      "NL": "Van welke locatie wilt je iets meer van weten?",
+      "GENTS": "Ester een fiestplein dadde wilt bezoeken?",
       "EN": "Which location do you want to visit?"
     },
     "Yes": {
@@ -21,28 +21,28 @@
       "EN": "Yes"
     },
     "No": {
-      "NL": "Nee",
+      "NL": "Neen",
       "GENTS": "Nieje",
       "EN": "No"
     },
     "Other_location": {
-      "NL": "Wil je een andere locatie te bekijken?",
-      "GENTS": "Wilde n ander fiestpleine zien?",
+      "NL": "Wenst je een andere locatie te bekijken?",
+      "GENTS": "Wild'een ander fiestplein zien?",
       "EN": "Would you like to check another location?"
     },
     "Restart": {
       "NL": "Type \"opnieuw\" of klik Reset in het hamburgermenu naast het tekstvak als u een nieuwe zoekopdracht wenst te starten.",
-      "GENTS": "As ge opnieuw wil zoeke, typt dan \"kere\" of klikt op Reset int menu naast het tekstvak",
+      "GENTS": "Oas ge nog nekier wilt zoeke, klopt tons \"kere\" of klikt op Reset int menu naast het tekstkootje",
       "EN": "Type \"again\" or push the button Begin opnieuw"
     },
     "Not_found": {
       "NL": "Sorry, ik kon jammer genoeg geen evenementen vinden.",
-      "GENTS": "Oesje, ik koste niks nie vinde, probeert es opnieuw!",
+      "GENTS": "Ola, 'k hê niets gevonden, probeert misschien wat anders?",
       "EN": "Sorry, I couldn't find an event."
     },
     "Search_location": {
       "NL": "Een locatie",
-      "GENTS": "Een fiestpleine",
+      "GENTS": "Een fiestplein",
       "EN": "A location"
     },
     "Search_Date": {
@@ -56,23 +56,23 @@
       "EN": "Forenoon:5~11|Afternoon:12~17|In the evening:18~23|At Night:0~4"
     },
     "HOURS_BLOCK": {
-      "NL": "Rond welk uur wil je?",
-      "GENTS": "Rond ewa uur wilde?",
+      "NL": "Rond welk uur wilt je?",
+      "GENTS": "Rond wannier moet dat zijn?",
       "EN": "Which hour?"
     },
     "Time_Periods": {
       "NL": "Kies een van de volgende opties om te specifieren, geen nood als je de foute periode gekozen hebt kan je makkelijk terug komen",
-      "GENTS": "Kiest iene van de opties om te specifieren",
+      "GENTS": "Kiest ien van d'opties om in detail te gaan",
       "EN": "Pick one"
     },
     "Date_Choice": {
       "NL": "Je hebt twee mogelijkheden, Wat er op dit moment bezig is of je kan zelf de uren bepalen ",
-      "GENTS": "Ge kun kiezen voor alles wadat er neu bezig es, ofwel zelf nen datum kiezen",
+      "GENTS": "Ge kun kiezen voor alles wadat er nui bezig es, ofwel zelf nen datum kiezen",
       "EN": "I can show you everything that's happening now, or you can choose a specific date"
     },
     "Previous_Block": {
-      "NL": "Terugkeren",
-      "GENTS": "Kere ke were",
+      "NL": "Terug",
+      "GENTS": "Terug",
       "EN": "Back"
     },
     "Choice_For_Date": {
@@ -81,8 +81,8 @@
       "EN": "Pick a date"
     },
     "Choice_For_Day": {
-      "NL": "Welke dag kies je?",
-      "GENTS": "Welke dag kiesde?",
+      "NL": "Welke dag kiest u?",
+      "GENTS": "Welken dag kiesde?",
       "EN": "Which day"
     },
     "Day_Block": {
@@ -92,32 +92,32 @@
     },
     "Now": {
       "NL": "Wat is er nu bezig?",
-      "GENTS": "Wa est er neu bezig?",
+      "GENTS": "Wadest er nui bezig?",
       "EN": "What's going on now"
     },
     "Welcome": {
-      "NL": "Hallo, welkom bij de Gentse Feesten. Ik kan je helpen bij het navigeren tussen de vele evenementen! De blauwe knoppen geven een aantal suggesties. Het hamburgermenu naast het tekstvak kan je ook altijd gebruiken. Je kan ook altijd zelf een zin sturen zoals \"Wat gebeurt er nu\" of \"Waar is er een toilet\". Waarop wil je zoeken?",
-      "GENTS": "Goeiendag beste fiester! Hieronder ziede ewa opties, ge kunt ook altijd zelf iet typen gelijk \"kmoe zieke\" of \"wa is ter neu te doen?\". 'T menuutje neverst den tekstbalk kan eu ook vuu'der elpen. Waarop wilde zoeken?",
+      "NL": "Hallo, welkom bij de Gentse Feesten. Ik kan je helpen bij het navigeren van de vele evenementen! De blauwe knoppen geven een aantal suggesties. Het hamburgermenu naast het tekstvak kan je ook altijd gebruiken. Je kan ook altijd zelf een zin sturen zoals \"Wat gebeurt er nu\" of \"Waar is er een toilet\". Waarop wil je zoeken?",
+      "GENTS": "Yow beste fiester! Hieronder ziede wa opties, ge kunt uuk altijd zelve iets kloowpe gelijk \"kmoe pisse\" of \"wa is ter nui te doen?\". 'T menuutje nevest den tekstbalk kan ui ook vuurder elpen. Waarop wilde zoeken?",
       "EN": "Hello! The blue buttons show some possible follow up questions. It's also possible to type a question yourself like \"What is happening now?\" or choose an option in the menu next to the textfield at the bottom. What are you looking for?"
     },
     "My_location": {
       "NL": "Gebruik mijn locatie",
-      "GENTS": "Gebruik mijn locatie moar",
+      "GENTS": "Gebruikt mijn locatie moar",
       "EN": "Use my location"
     },
     "Nearest_location": {
-      "NL": "Je gekozen locatie is het dichtst bij:",
+      "NL": "Je gekozen locatie is het dichts bij:",
       "GENTS": "Ge zijt het dichtste bij ",
       "EN": "The nearest location is "
     },
     "This_location": {
-      "NL": "Wil je op deze locatie zoeken?",
-      "GENTS": ". Wilde op dies locatie zoeken?",
+      "NL": "Wilt u op deze locatie zoeken?",
+      "GENTS": ". Wilde op deze locatie zoeken?",
       "EN": "Do you want to search on this location?"
     },
     "Choose_card": {
       "NL": "Kies op kaart",
-      "GENTS": "Kies op de koart",
+      "GENTS": "Kiest op de koarte",
       "EN": "Pick a location on the map"
     },
     "Choose_Language": {
@@ -125,12 +125,12 @@
     },
     "Choose_list": {
       "NL": "Kies uit lijst",
-      "GENTS": "Kiest uit ne lijst",
+      "GENTS": "Kiest uit een lijste",
       "EN": "Choose from list"
     },
     "What_Is_It": {
       "NL": "Wat houdt dit in?",
-      "GENTS": "Wa est?",
+      "GENTS": "Wat es dadde?",
       "EN": "What is it?"
     },
     "MONTH": {
@@ -140,7 +140,7 @@
     },
     "FREE": {
       "NL": "Gratis",
-      "GENTS": "Kost gien kloten",
+      "GENTS": "Van de veurniet",
       "EN": "Free"
     },
     "NOTFREE": {
@@ -150,22 +150,22 @@
     },
     "NEXT": {
       "NL": "Te doen hierna?",
-      "GENTS": "Wa est ierachter?",
+      "GENTS": "Wat est der ierachter?",
       "EN": "After this event?"
     },
     "FOUND": {
       "NL": "Dit heb ik gevonden:",
-      "GENTS": "Dees è kik gevonde:",
+      "GENTS": "Gevonden:",
       "EN": "This is what I found: "
     },
     "ERROR": {
       "NL": "Er is iets foutgelopen, we proberen dit zo snel mogelijk op te lossen.",
-      "GENTS": "Der es ietken misgegoan, we probiere et te fikse!",
+      "GENTS": "Der es iets kapoowt, we probere de een mêwe aan te passe!",
       "EN": "Something has gone wrong. We are trying to fix it as quick as possible."
     },
     "Choose_options": {
       "NL": "Je kan kiezen uit een lijst van pleinen in Gent ofwel kan je op een kaart je gewenste plaatst aanduiden",
-      "GENTS": "Ge kun kiezen veur eu locatie, ofwel iene kiezen",
+      "GENTS": "Ge kun kiezen uit een lijste van locaties of anders ientje op een koarte tuuge",
       "EN": "You can choose a location or use your own."
     },
     "Pick_map": {
@@ -175,12 +175,12 @@
     },
     "Donot_understand": {
       "NL": "Ik begrijp niet wat u bedoelt, wilt u weten wat hier gebeurt?",
-      "GENTS": "Wadadde? Da ès maar iet roar ze! Woar es da fiestje? Hier es da fiestje!",
-      "EN": "I don't understand. Do you want to know what's happening overhere?"
+      "GENTS": "Wablieft? Wadadde? Pardon?",
+      "EN": "I don't understand. Do you want to know what's happening over here?"
     },
     "CLOSEST_TOILET": {
       "NL": "Dichts bijzijnde toilet",
-      "GENTS": "Dichtste toilet",
+      "GENTS": "Dichtste wc",
       "EN": "Closest toilet"
     },
     "INVALID_INPUT": {
