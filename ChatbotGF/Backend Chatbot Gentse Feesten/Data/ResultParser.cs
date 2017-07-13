@@ -16,6 +16,7 @@ namespace Chatbot_GF.Data
             Event e = new Event();
             foreach (String key in res.Variables)
             {
+                
                 try
                 {
                     switch (key)
@@ -61,7 +62,7 @@ namespace Chatbot_GF.Data
                     }
                 }catch(Exception ex)
                 {
-                    System.Console.WriteLine(ex.Message);
+                    System.Console.WriteLine(ex);
                 }
             }
             return e;

@@ -78,7 +78,7 @@ namespace Chatbot_GF.MessengerManager
                         break;
                     case "DEVELOPER_DEFINED_LOCATION":
                         if(payload.Value != "ALL")
-                            remote.GetEventsHereNow(id, Constants.GetLocation(payload.Value).Id, Constants.Now,payload.Language);
+                            remote.GetEventsHereNow(id, Constants.GetLocation(payload.Value).Id, Constants.Now,payload.Language,3);
                         else
                             remote.GetEventsNow(id,payload.Language, Constants.Now);
                         break;
@@ -110,13 +110,7 @@ namespace Chatbot_GF.MessengerManager
                         // moet nog normaal gezet worden maar voor test gevallen is het deze tijd
                         int pos = payload.Value.IndexOf("-_-");
                         remote.GetNextEvents(payload.Value.Substring(0, pos), payload.Value.Substring(pos + 3), 3, id, payload.Language);
-                        break;
-                    case "GET_HELP":
-                        rmanager.SendHelpMessage(id);
-                        break;
-                    case "GET_HELP_PAGE":
-                        rmanager.SendTextMessage(id, "Comming Soon (2017)");
-                        break;
+                        break;                   
                     default:
                         //do nothing
                         break;
