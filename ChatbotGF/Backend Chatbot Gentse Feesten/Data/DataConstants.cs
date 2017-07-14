@@ -103,7 +103,7 @@ namespace Chatbot_GF.Data
 
         public DateTime Now
         {
-            get { return DateTime.Now.AddDays(5).AddHours(6); }
+            get { return DateTime.Now; }
         }
 
         private IConfigurationRoot init(string json)
