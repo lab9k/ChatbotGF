@@ -9,6 +9,9 @@ using static Chatbot_GF.BotData.MessengerData;
 
 namespace Chatbot_GF.MessengerManager
 {
+    /// <summary>
+    /// Handles payloads and start the corresponding method or action
+    /// </summary>
     public class PayloadHandler : IPayloadHandler
     {
         private ReplyManager rmanager;
@@ -34,6 +37,8 @@ namespace Chatbot_GF.MessengerManager
             {
                 long id = message.sender.id;
                 PayloadData payload = new PayloadData(message.postback.payload);
+
+                //A huge case, hooraaaay! Nothing wrong here ?!
                 switch (payload.Payload)
                 {
                     case "GET_STARTED_PAYLOAD":

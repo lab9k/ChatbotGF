@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Chatbot_GF.Controllers
 {
+    /// <summary>
+    /// Webhook for recieving information from messenger, al received date passes through here
+    /// </summary>
     [Route("api/[controller]")]
     public class MessengerController : Controller
     {
@@ -26,13 +29,19 @@ namespace Chatbot_GF.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Messenger periodically makes GET requests to verify the connection
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Get()
         {
             var allUrlKeyValues = Request.Query;
-            if (allUrlKeyValues["hub.mode"] == "subscribe" && allUrlKeyValues["hub.verify_token"] == "test123")
+            //if verify token matches, return challenge
+            if (allUrlKeyValues["hub.mode"] == "subscribe" && allUrlKeyValues["hub.verify_token"] == "FDH399DJ33JD°3NNNF33222DD309DFN23°DN33D+")
             {
                 _logger.LogInformation("Messenger GET verification received");
+                
                 var returnVal = allUrlKeyValues["hub.challenge"];
                 return Json(int.Parse(returnVal));
             }

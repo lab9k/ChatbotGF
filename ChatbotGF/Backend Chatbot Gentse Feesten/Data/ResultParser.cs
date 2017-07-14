@@ -9,6 +9,9 @@ using VDS.RDF.Query;
 
 namespace Chatbot_GF.Data
 {
+    /// <summary>
+    /// Creates Event object from SPARQL resultset
+    /// </summary>
     public class ResultParser
     {
 

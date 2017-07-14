@@ -23,7 +23,9 @@ namespace Chatbot_GF.Model
     }
 
    
-
+    /// <summary>
+    /// Event object, values can be null
+    /// </summary>
     public class Event
     {
         public Event()

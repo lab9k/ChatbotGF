@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Chatbot_GF.BotData
 {
+/// <summary>
+/// Parses payload string into object
+/// </summary>
     public class PayloadData : List<string>
     {
         private string _Language;
@@ -21,9 +24,7 @@ namespace Chatbot_GF.BotData
                     _Language = list[2];
                 }
             }
-        }
-
-       
+        }      
 
         public string Language {
             get {

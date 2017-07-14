@@ -3,6 +3,9 @@ using static Chatbot_GF.BotData.MessengerData;
 
 namespace Chatbot_GF.MessengerManager
 {
+    /// <summary>
+    /// Provides methods for sending messages and templates back to the user
+    /// </summary>
     public class MessageHandler : IMessageHandler
     {
 

@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Chatbot_GF.MessengerManager
 {
+
+    /// <summary>
+    /// Scans "replies.json" and searches for keywords to provide either a payload or an answer
+    /// </summary>
     public class FreeTextHandler : ITextHandler
     {
         private IConfiguration ReplyStore;
@@ -69,6 +73,7 @@ namespace Chatbot_GF.MessengerManager
             }
         }
         
+
         private string RemoveNonAlphanumerics(string text)
         {
             char[] arr = text.Where(c => (char.IsLetterOrDigit(c) ||

@@ -16,6 +16,9 @@ using VDS.RDF.Storage;
 
 namespace Chatbot_GF.Data
 {
+    /// <summary>
+    /// This class provides methodes to connect to the LOD using SPARQL 
+    /// </summary>
     public class RemoteDataManager : IRemoteDataManager { 
 
         private SparqlRemoteEndpoint endpoint;  
@@ -38,11 +41,14 @@ namespace Chatbot_GF.Data
 
         public void GetEventsHereNow(long id,string location,DateTime now,string language, int count)
         {
+            //Parse object data to string for using in the query
             string formattedTime = now.ToString("yyyy-MM-ddTHH:mm:sszzz");
             string locationfilter = "str(?location) = \"" + location + "\"";
             string startdatefilter = "?startdate < \"" + formattedTime + "\" ^^ xsd:dateTime";
             string enddatefilter = "?enddate > \"" + formattedTime + "\" ^^ xsd:dateTime";
             string nextdatefilter= "?startdate > \"" + formattedTime + "\" ^^ xsd:dateTime";
+
+
             string query = constants.GetQuery("base") + string.Format(constants.GetQuery("EventsNowHere"), locationfilter, startdatefilter, enddatefilter, nextdatefilter,count);
             _logger.LogInformation("Sending SparQL query: EventsHereNow");
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData { Id = id, Language = language });
@@ -54,6 +60,7 @@ namespace Chatbot_GF.Data
             string enddatefilter = "?enddate > \"" + date + "\" ^^ xsd:dateTime";
             List<SearchableLocation> locations = constants.Locations;
             string locationFilters = "str(?location) = \"" + locations[0].Id + "\"";
+            //To prevent to much results, filter on the events that are specified in the JSON file
             for (int i = 1; i < locations.Count; i++)
             {
                 locationFilters += " || str(?location) = \"" + locations[i].Id + "\"";
@@ -79,12 +86,15 @@ namespace Chatbot_GF.Data
             _logger.LogInformation("Sending SparQL query: EventsNow");
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData {Id = id, Language = lang });
         }
+
+
         public  void GetNextEvents(string locationurl,string date, int count, long id,string lang)
         {
             string query = constants.GetQuery("base") + string.Format(constants.GetQuery("NextEventsOnLocation"), locationurl, date, count);
             _logger.LogInformation("Sending SparQL query: NextEvents");
             endpoint.QueryWithResultSet(query, new SparqlResultsCallback(callback), new CallbackData { Id = id, Language = lang });
         }
+
         public void GetEventByName(string locationName, long id, string lang)
         {
             try
@@ -99,7 +109,12 @@ namespace Chatbot_GF.Data
             }
         }
 
-
+        /// <summary>
+        /// Callback for returning data by async SPARQL query method.
+        /// Checks resultset and parses events into objects then creates Messenger templates and pass it to the replymanager or directly to the user
+        /// </summary>
+        /// <param name="results"></param>
+        /// <param name="u"></param>
         public void callback(SparqlResultSet results, Object u)
         {
             _logger.LogInformation($"Found {results.Count} results in query");

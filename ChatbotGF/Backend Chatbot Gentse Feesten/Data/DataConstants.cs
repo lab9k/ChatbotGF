@@ -13,6 +13,9 @@ using static Chatbot_GF.BotData.MessengerData;
 
 namespace Chatbot_GF.Data
 {
+    /// <summary>
+    /// Reads data from JSONs and provides static data to the whole application
+    /// </summary>
     public class DataConstants : IDataConstants
     {
         public int numberLocations;

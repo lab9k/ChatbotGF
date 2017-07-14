@@ -7,8 +7,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+
 namespace Chatbot_GF.MessageBuilder.Factories
 {
+
+    /// <summary>
+    /// Creates a Messenger reply object, must be parsed to JSON and posted back to Messenger.
+    /// </summary>
     public class CarouselFactory : ICarouselFactory
     {
         private DataConstants Constants;

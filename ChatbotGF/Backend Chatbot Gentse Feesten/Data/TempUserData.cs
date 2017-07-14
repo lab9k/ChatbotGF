@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Chatbot_GF.Data
 {
+    /// <summary>
+    /// Temporarily stores user data to provide a working flow
+    /// </summary>
     public class TempUserData : ITempUserData
     {
         private Dictionary<long, UserData> UserLanguage;
