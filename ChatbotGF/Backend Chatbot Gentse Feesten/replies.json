@@ -129,6 +129,18 @@
     "no": {
       "haschildren": false,
       "payload": "DEVELOPER_DEFINED_SEARCHFALSE°°EN"
+    },
+    "morgen": {
+      "haschildren": false,
+      "payload": "DEVELOPER_DEFINED_TOMORROW°°NL"
+    },
+    "tomorrow": {
+      "haschildren": false,
+      "payload": "DEVELOPER_DEFINED_TOMORROW°°EN"
+    },
+    "morgens": {
+      "haschildren": false,
+      "payload": "DEVELOPER_DEFINED_TOMORROW°°GENTS"
     }
   }
 }
