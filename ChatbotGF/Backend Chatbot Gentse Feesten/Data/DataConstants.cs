@@ -2,13 +2,10 @@
 using Chatbot_GF.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RestEase;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using static Chatbot_GF.BotData.MessengerData;
 
 namespace Chatbot_GF.Data
