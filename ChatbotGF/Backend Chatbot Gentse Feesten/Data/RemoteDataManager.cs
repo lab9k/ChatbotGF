@@ -30,9 +30,9 @@ namespace Chatbot_GF.Data
         public RemoteDataManager(ILogger<RemoteDataManager> logger, IDataConstants constants,IReplyManager rManager, ICarouselFactory carouselFactory)
         {
             _logger = logger;
-            endpoint = new SparqlRemoteEndpoint(new Uri("https://stad.gent/sparql"), "http://stad.gent/gentse-feesten/");
+            this.constants = (DataConstants)constants;
+            endpoint = new SparqlRemoteEndpoint(new Uri(this.constants.GetConfig("apiUrl", "sparql")), this.constants.GetConfig("apiUrl", "webGF"));
             rm =(ReplyManager) rManager;
-            this.constants = (DataConstants) constants;
             this.carouselFactory = carouselFactory;
 
         }

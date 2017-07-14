@@ -8,6 +8,7 @@ namespace Chatbot_GF.BotData
     /// The controller creates an object of this type when recieving a POST request from Messenger
     /// Depending on the type of data some properties will be null
     /// </summary>
+    
     public class MessengerData
     {
         [JsonProperty(PropertyName = "object")]
