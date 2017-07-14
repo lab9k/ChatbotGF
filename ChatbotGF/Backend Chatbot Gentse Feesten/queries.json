@@ -4,5 +4,5 @@
   "EventsNow": "FILTER( ({0}) && {1} && {2}) }} ORDER BY ASC(?startdate) Limit 10 ",
   "NextEventsOnLocation": "FILTER(str(?location) = \"{0}\" && ?startdate > \"{1}\" ^^ xsd:dateTime)}} ORDER BY ASC(?startdate) Limit {2}",
   "EventsAtTime": "FILTER( ({0}) && {1}) }}",
-  "SearchByName": "FILTER(contains(lcase(?name), \"{0}\") && ?startdate > \"{1}\" ^^ xsd:dateTime)}} ORDER BY ASC(?startdate) Limit 3"
+  "SearchByName": "FILTER(contains(lcase(?name), \"{0}\") && (?enddate > \"{1}\" ^^ xsd:dateTime ))}} ORDER BY ASC(?startdate) Limit 3"
 }
