@@ -36,9 +36,9 @@
       "EN": "Type \"again\" or push the button Start which you can find in the menu"
     },
     "Not_found": {
-      "NL": "Sorry, ik kon jammer genoeg geen evenementen vinden.",
+      "NL": "Sorry, ik kon jammer genoeg geen evenementen vinden. Bij het zoeken op het huidige tijdstip ga ik enkel de grote pleinen af. Je kan altijd specifieker zoeken door de naam van het evenement te typen",
       "GENTS": "Ola, 'k hê niets gevonden, probeert misschien wat anders?",
-      "EN": "Sorry, I couldn't find an event."
+      "EN": "Sorry, I couldn't find an event. Try a more specific search. Maybe you could enter a partial event name."
     },
     "Search_location": {
       "NL": "Een locatie",
