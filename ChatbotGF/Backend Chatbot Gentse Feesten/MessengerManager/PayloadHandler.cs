@@ -108,7 +108,9 @@ namespace Chatbot_GF.MessengerManager
                         payload.Value = $"{da[1]}{da[0]}:00+02:00";
                         remote.GetEventsAtTime(id, payload.Value,payload.Language);
                         break;
-
+                    case "DEVELOPER_DEFINED_TOMORROW":
+                        remote.GetEventsNow(id, payload.Language, Constants.Now.AddDays(1));
+                        break;
                     case "DEVELOPER_DEFINED_NEXT":
                         int pos = payload.Value.IndexOf("-_-");
                         remote.GetNextEvents(payload.Value.Substring(0, pos), payload.Value.Substring(pos + 3), 3, id, payload.Language);
