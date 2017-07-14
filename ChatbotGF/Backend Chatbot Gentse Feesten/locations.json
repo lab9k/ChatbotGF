@@ -1,5 +1,5 @@
 ﻿{
-  "LocationsCount" : 18,
+  "LocationsCount" : 19,
   "locations": [
     {
       "Name": "BAUDELOHOF",
@@ -29,13 +29,13 @@
       "Search": [ "sintjacobs", "sint jacobs", "bij sintjacobs", "walter de buckplein" ]
     },
     {
-      "Name": "CENTRUM",
-      "PrettyName": "Centrum",
-      "Id": "https://gentsefeesten.stad.gent/api/v1/location/f792034c-a8e5-4260-ab6b-2adeecf759a6",
-      "Lon": 3.718548,
-      "Lat": 51.0575292,
-      "SearchCount": 1,
-      "Search": [ "centrum" ]
+      "Name": "KOUTER",
+      "PrettyName": "Kouter",
+      "Id": "https://gentsefeesten.stad.gent/api/v1/location/b72600a7-908b-4e04-abbe-b969827e8413",
+      "Lon": 3.723948,
+      "Lat": 51.049933,
+      "SearchCount": 2,
+      "Search": [ "kout", "kouter" ]
     },
     {
       "Name": "STADSHAL",
@@ -154,6 +154,15 @@
       "Lat": 51.05611,
       "SearchCount": 2,
       "Search": [ "charla", "charlatan" ]
+    },
+    {
+      "Name": "CENTRUM",
+      "PrettyName": "Centrum",
+      "Id": "https://gentsefeesten.stad.gent/api/v1/location/f792034c-a8e5-4260-ab6b-2adeecf759a6",
+      "Lon": 3.718548,
+      "Lat": 51.0575292,
+      "SearchCount": 1,
+      "Search": [ "centrum" ]
     },
     {
       "Name": "Het Huis van Alijn",
