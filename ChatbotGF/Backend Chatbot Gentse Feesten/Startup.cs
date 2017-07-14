@@ -52,7 +52,8 @@ namespace Chatbot_GF
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddFile("Logs/Chatbot-{Date}.txt");
+            //log to file to debug, use LogLevel.Info
+            loggerFactory.AddFile("Logs/Chatbot-{Date}.txt",LogLevel.Warning);
             app.UseStaticFiles();
             app.UseMvc();
         }
