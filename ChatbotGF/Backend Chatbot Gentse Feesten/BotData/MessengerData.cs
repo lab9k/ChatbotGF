@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Chatbot_GF.BotData
 {
 
-    // deze klasse wordt gebruikt bij het ophallen van een bericht(json omzetten naar objecten en velden)
+    
     public class MessengerData
     {
         [JsonProperty(PropertyName = "object")]
