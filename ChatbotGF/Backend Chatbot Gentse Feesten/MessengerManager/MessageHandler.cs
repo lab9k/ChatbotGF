@@ -28,7 +28,7 @@ namespace Chatbot_GF.MessengerManager
             }
         }
         /// <summary>
-        /// If messages corresponds to any of the alread defined payloads, set the payload
+        /// If messages corresponds to any of the already defined payloads, set the payload
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>

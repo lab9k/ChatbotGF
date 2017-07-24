@@ -30,6 +30,10 @@ namespace Chatbot_GF.MessengerManager
             this.Remote = (RemoteDataManager)Remote;
             InitReplies();
         }
+
+        /// <summary>
+        /// Loading configurationfile with replies
+        /// </summary>
         private void InitReplies()
         {
             _logger.LogInformation(this.GetType().ToString() + "Loading replies");
@@ -40,7 +44,11 @@ namespace Chatbot_GF.MessengerManager
             ReplyStore = builder.Build();
         }
 
-
+        /// <summary>
+        /// Checking if the text send from id is a keyword for further information
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="text"></param>
         public void CheckText(long id,string text)
         {
             string res;
