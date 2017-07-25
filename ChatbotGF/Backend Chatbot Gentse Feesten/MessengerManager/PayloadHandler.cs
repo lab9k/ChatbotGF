@@ -31,6 +31,10 @@ namespace Chatbot_GF.MessengerManager
             this.locationFactory = locationFactory;
         }
 
+        /// <summary>
+        /// Handles all the different payloads on a different manner
+        /// </summary>
+        /// <param name="message"></param>
         public void handle(Messaging message)
         {
             try
@@ -38,7 +42,7 @@ namespace Chatbot_GF.MessengerManager
                 long id = message.sender.id;
                 PayloadData payload = new PayloadData(message.postback.payload);
 
-                //A huge case, hooraaaay! Nothing wrong here ?!
+                //A huge case, hooraaaay!
                 switch (payload.Payload)
                 {
                     case "GET_STARTED_PAYLOAD":
@@ -47,7 +51,7 @@ namespace Chatbot_GF.MessengerManager
                     case "SEND_LOCATION_CHOICE":
                         rmanager.SendLocationsChoice(id, payload.Language);
                         break;
-                    // tijd keuze extra 
+                    // extra time choice
                     case "SEND_DATE_CHOICE":
                         rmanager.SendDateChoice(message.sender.id, payload.Language);
                         break;
